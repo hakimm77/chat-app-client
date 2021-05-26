@@ -12,6 +12,11 @@ const MainRoomsListItemContainer = styled.div`
   :hover {
     background-color: #464e5b;
   }
+
+  @media (max-width: 1000px) {
+    height: 75px;
+    padding-right: 7px;
+  }
 `;
 
 const RoomsListItem = ({ children, changeColor }) => {

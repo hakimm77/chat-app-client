@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import AppText from "./AppText";
+import AppText from "./reusableComponents/AppText";
 import minimizeIcon from "../Assets/minimize-room.png";
 import maximizeIcon from "../Assets/maximize-room.png";
 
@@ -14,10 +14,16 @@ const MainCardContainer = styled.div`
   -moz-box-shadow: 0 0 5px #ccc;
   -webkit-box-shadow: 0 0 5px #ccc;
   box-shadow: 0 0 5px #ccc;
-  width: 20%;
+  width: 25%;
   height: 500px;
+
+  @media (max-width: 1000px) {
+    height: 550px;
+    width: 95%;
+    right: 2%;
+  }
 `;
-//#00c3ff good blue
+
 const Upbar = styled.div`
   position: absolute;
   top: 0;
@@ -29,6 +35,10 @@ const Upbar = styled.div`
   border-bottom: 1px solid black;
   border-top: 3px solid #ccc;
   padding-left: 10px;
+
+  @media (max-width: 1000px) {
+    width: 95%;
+  }
 `;
 
 const Icon = styled.img`

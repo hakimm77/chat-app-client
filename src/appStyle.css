@@ -4,7 +4,8 @@ body {
   height: 100%;
   background-color: #fafafa;
   font-family: sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 ::-webkit-scrollbar {
