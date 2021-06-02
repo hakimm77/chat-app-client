@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Spacer from "../../Components/reusableComponents/Spacer";
-import InputField from "../../Components/reusableComponents/InputField";
+import InputField from "../../Components/InputField";
 import AppText from "../../Components/reusableComponents/AppText";
 import Loadingimage from "../../Components/reusableComponents/LoadingImage";
 import Container from "../../Components/reusableComponents/Container";
@@ -65,6 +65,7 @@ const Login = ({ history }) => {
   };
 
   useEffect(() => {
+    document.title = "Chat app | login";
     if (user) {
       history.push("/chat");
     }
@@ -74,10 +75,8 @@ const Login = ({ history }) => {
     <Container
       flex
       direction="column"
-      Style={{
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      alignVertical="center"
+      alignHorizantle="center"
     >
       <Spacer height={10} />
       <AppText weight="bold" color="#3f4547" size={30}>

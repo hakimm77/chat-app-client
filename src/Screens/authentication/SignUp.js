@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AppText from "../../Components/reusableComponents/AppText";
 import Spacer from "../../Components/reusableComponents/Spacer";
-import InputField from "../../Components/reusableComponents/InputField";
+import InputField from "../../Components/InputField";
 import Container from "../../Components/reusableComponents/Container";
 
 const InputsContainer = styled.form`
@@ -61,6 +61,7 @@ const SignUp = ({ history }) => {
   };
 
   useEffect(() => {
+    document.title = "Chat app | signUp";
     if (user) {
       history.push("/chat");
     }
@@ -70,12 +71,9 @@ const SignUp = ({ history }) => {
     <Container
       flex
       direction="column"
-      Style={{
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      alignVertical="center"
+      alignHorizantle="center"
     >
-      {" "}
       <Spacer height={10} />
       <AppText weight="bold" color="#3f4547" size={30}>
         Create a free account

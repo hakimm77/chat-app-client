@@ -6,6 +6,7 @@ const AppText = ({ children, size, weight, color, Style, mobileStyle }) => {
   const textMobile = mobileStyle;
 
   const textStyle = {
+    userSelect: "none",
     fontSize: size,
     fontWeight: weight,
     color: color,

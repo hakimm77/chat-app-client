@@ -5,17 +5,24 @@ const Container = ({
   children,
   flex,
   direction,
+  alignVertical,
+  alignHorizantle,
   width,
   height,
   Style,
   mobileStyle,
   clickEvent,
+  hoverOn,
+  hoverOut,
+  doubleClick,
 }) => {
   const changeDesign = useMediaQuery("(max-width: 1000px)");
 
   const containerStyling = {
     display: flex ? "flex" : undefined,
     flexDirection: direction,
+    justifyContent: alignVertical,
+    alignItems: alignHorizantle,
     width: width,
     height: height,
     ...Style,
@@ -33,6 +40,9 @@ const Container = ({
           : containerStyling
       }
       onClick={clickEvent}
+      onMouseEnter={hoverOn}
+      onMouseLeave={hoverOut}
+      onDoubleClick={doubleClick}
     >
       {children}
     </div>

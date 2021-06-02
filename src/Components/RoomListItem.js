@@ -5,12 +5,12 @@ const MainRoomsListItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 75px;
+  height: 40px;
   justify-content: center;
   align-items: flex-start;
   cursor: pointer;
   :hover {
-    background-color: #464e5b;
+    background-color: #350d36;
   }
 
   @media (max-width: 1000px) {

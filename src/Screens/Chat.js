@@ -5,16 +5,17 @@ import ChatCard from "../Components/ChatCard";
 import RoomsList from "../Components/RoomsList";
 import sendMessage from "../helpers/sendMessage";
 import RoomsListItem from "../Components/RoomListItem";
-import addRoom from "../helpers/addRoom";
 import sendMessageIcon from "../Assets/send-message-icon.png";
 import menuToggle from "../Assets/menu-toggle.png";
 import Container from "../Components/reusableComponents/Container";
 import Spacer from "../Components/reusableComponents/Spacer";
 import Picker from "emoji-picker-react";
 import emojiIcon from "../Assets/emojiIcon.png";
-import userIcon from "../Assets/user-icon.png";
+import likeIcon from "../Assets/like-icon.png";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Icon from "../Components/reusableComponents/Icon";
+import Navbar from "../Components/Navbar";
+import likeMessage from "../helpers/likeMessage";
 
 const MessageInput = styled.input`
   width: 95%;
@@ -22,9 +23,11 @@ const MessageInput = styled.input`
   padding: 10px;
   border: none;
   outline: none;
-  background-color: #e0e0e0;
   font-size: 17px;
   color: #383838;
+  ::placeholder {
+    font-size: 16px;
+  }
 `;
 
 const Chat = ({ history }) => {
@@ -37,9 +40,11 @@ const Chat = ({ history }) => {
   const [userEmail, setUserEmail] = useState();
   const [displayEmojiPicker, setDisplayEmojiPicker] = useState("none");
   const [roomDisplay, setRoomDisplay] = useState("none");
+  const [searchRes, setSearchRes] = useState([]);
   const changeDesign = useMediaQuery("(max-width: 1000px)");
 
   const loggedIn = async () => {
+    document.title = "Chat app | chat";
     console.log(user);
     if (user) {
       setIsLogged(true);
@@ -59,13 +64,12 @@ const Chat = ({ history }) => {
 
       await fetchMessagesResponse.then((data) => {
         if (data) {
-          let messagesArr = Object.values(data);
-
+          let messageArr = Object.entries(data);
           setMessagesList([]);
 
-          messagesArr.forEach((childSnapchot) => {
+          messageArr.forEach((childSnapchot) => {
             setMessagesList((previousMessages) => [
-              childSnapchot,
+              Object.values(childSnapchot),
               ...previousMessages,
             ]);
           });
@@ -107,7 +111,19 @@ const Chat = ({ history }) => {
 
   useEffect(() => {
     fetchMessages();
-  }, [rooms.length, selectedRoom, messageContent]);
+  }, [rooms.length, selectedRoom]);
+
+  const searchRooms = (txt) => {
+    if (txt) {
+      setSearchRes(
+        rooms.filter((room) =>
+          room.name.toUpperCase().includes(txt.toUpperCase())
+        )
+      );
+    } else {
+      setSearchRes([]);
+    }
+  };
 
   onkeydown = (e) => {
     if (isLogged) {
@@ -121,34 +137,20 @@ const Chat = ({ history }) => {
   return (
     <Container
       flex
-      direction="row"
+      direction={rooms.length ? "row" : "column"}
       height="100%"
-      Style={
-        rooms.length
-          ? { justifyContent: "space-between" }
-          : {
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }
-      }
+      alignVertical={rooms.length ? "space-between" : "center"}
+      alignHorizantle={rooms.length ? "" : "center"}
     >
+      <Navbar
+        history={history}
+        search={searchRooms}
+        searchResults={searchRes}
+        changeRoom={changeRoom}
+        searchBar
+      />
       {isLogged ? (
         <Container>
-          <Container
-            clickEvent={() => {
-              history.push("./profile");
-            }}
-          >
-            <Icon
-              source={userIcon}
-              width="55px"
-              height="55px"
-              padding="5px"
-              Style={{ position: "absolute", top: 0, right: 0 }}
-            />
-          </Container>
-
           <Icon
             width="55px"
             height="55px"
@@ -160,61 +162,61 @@ const Chat = ({ history }) => {
               );
             }}
           />
-
-          {rooms.length ? (
-            <ChatCard
-              roomName={
-                rooms[selectedRoom] ? rooms[selectedRoom].name : "Loading..."
-              }
+          <ChatCard
+            roomName={
+              rooms[selectedRoom] ? rooms[selectedRoom].name : "Loading..."
+            }
+          >
+            <Picker
+              onEmojiClick={(event, emojiObject) => {
+                setMessageContent((previousContent) =>
+                  previousContent
+                    ? previousContent.concat(emojiObject.emoji)
+                    : emojiObject.emoji
+                );
+              }}
+              pickerStyle={{
+                display: displayEmojiPicker,
+                position: "absolute",
+                bottom: 60,
+                right: 20,
+                border: "1px solid black",
+              }}
+              groupVisibility={{
+                flags: false,
+                food_drink: false,
+                travel_places: false,
+                symbols: false,
+                recently_used: false,
+              }}
+              native
+            />
+            <Container
+              flex
+              direction="row"
+              width="100%"
+              alignVertical="center"
+              alignHorizantle="center"
             >
-              <Picker
-                onEmojiClick={(event, emojiObject) => {
-                  setMessageContent((previousContent) =>
-                    previousContent
-                      ? previousContent.concat(emojiObject.emoji)
-                      : emojiObject.emoji
-                  );
-                }}
-                pickerStyle={{
-                  display: displayEmojiPicker,
-                  position: "absolute",
-                  top: 50,
-                  border: "1px solid black",
-                }}
-                groupVisibility={{
-                  flags: false,
-                  food_drink: false,
-                  travel_places: false,
-                  symbols: false,
-                  recently_used: false,
-                }}
-                native
-              />
               <Container
                 flex
                 direction="row"
+                width="97%"
+                alignVertical="center"
+                alignHorizantle="center"
                 Style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderTop: "2px solid #bdbdbd",
+                  border: "1px solid #a8a8a8",
                   overflow: "none",
-                  padding: "7px",
+                  marginBottom: 10,
                 }}
               >
-                <Icon
-                  source={emojiIcon}
-                  width="25px"
-                  height="25px"
-                  padding="7px"
-                  clickEvent={() => {
-                    setDisplayEmojiPicker((previousState) =>
-                      previousState === "none" ? "" : "none"
-                    );
-                  }}
-                />
                 <MessageInput
                   id="input"
-                  placeholder="Type a message..."
+                  placeholder={
+                    rooms[selectedRoom]
+                      ? `Message - ${rooms[selectedRoom].name}`
+                      : undefined
+                  }
                   onChange={(txt) => setMessageContent(txt.currentTarget.value)}
                   value={messageContent}
                   autoFocus={true}
@@ -223,10 +225,21 @@ const Chat = ({ history }) => {
                   }}
                 />
                 <Icon
+                  source={emojiIcon}
+                  width="20px"
+                  height="20px"
+                  padding="5px"
+                  clickEvent={() => {
+                    setDisplayEmojiPicker((previousState) =>
+                      previousState === "none" ? "" : "none"
+                    );
+                  }}
+                />
+                <Icon
                   source={sendMessageIcon}
-                  width="30px"
-                  height="30px"
-                  padding="10px"
+                  width="25px"
+                  height="25px"
+                  padding="5px"
                   clickEvent={() => {
                     setMessageContent("");
                     sendMessage(
@@ -237,113 +250,135 @@ const Chat = ({ history }) => {
                   }}
                 />
               </Container>
-              <Container
-                flex
-                direction="column-reverse"
-                width="100%"
-                Style={{
-                  overflow: "auto",
-                  paddingBottom: "20px",
-                  marginTop: "60px",
-                }}
-              >
-                {messagesList.map((content) => {
-                  return (
-                    <div
-                      style={
-                        messagesList[messagesList.length - 1] === content
-                          ? { marginTop: 100 + "px" }
-                          : undefined
-                      }
-                    >
-                      <AppText
-                        color="gray"
-                        size={16}
-                        Style={{ marginLeft: "7px", marginTop: "5px" }}
-                      >
-                        {messagesList[messagesList.indexOf(content) + 1] &&
-                        messagesList[messagesList.indexOf(content) + 1]
-                          .email === content.email
-                          ? messagesList.indexOf(content) ===
-                            messagesList.length - 1
-                            ? content.email.replace("@gmail.com", "")
-                            : undefined
-                          : content.email.replace("@gmail.com", "")}
-                      </AppText>
-                      <Spacer height={0.5} />
-                      <Container
-                        flex
-                        direction="row"
-                        width="fit-content"
-                        Style={{
-                          maxWidth: "65%",
-                          wordBreak: "break-word",
-                          borderRadius: "15px",
-                          backgroundColor: "#fafafa",
-                          border: "1px solid #ccc",
-                          margin: "1px",
-                          padding: "13px",
-                          marginLeft: "7px",
-                        }}
-                      >
-                        <AppText color="#262626" size={20}>
-                          {content.message}
-                        </AppText>
-                      </Container>
-                    </div>
-                  );
-                })}
-              </Container>
-            </ChatCard>
-          ) : (
-            <AppText
-              color="#ffe5b9"
-              weight="bold"
-              size={30}
-              Style={{ padding: 15 }}
-            >
-              Add room and start chating !
-            </AppText>
-          )}
-        </Container>
-      ) : undefined}
-
-      <RoomsList
-        addRoom={addRoom}
-        listDisplay={changeDesign ? roomDisplay : "flex"}
-      >
-        {rooms.map((room) => {
-          return (
-            <RoomsListItem
-              changeColor={() => {
-                changeRoom(room);
+            </Container>
+            <Container
+              flex
+              direction="column-reverse"
+              width="100%"
+              Style={{
+                overflow: "auto",
+                paddingBottom: "20px",
+                marginTop: "60px",
               }}
             >
-              <AppText
-                color="white"
-                size={30}
-                Style={{ paddingLeft: 10 }}
-                mobileStyle={{
-                  fontSize: 20,
-                  color: "#fafafa",
-                  padding: 5,
-                }}
-              >
-                {room.name}
-              </AppText>
-              <AppText color="#94969a" size={16} Style={{ paddingLeft: 10 }}>
-                {rooms[selectedRoom] === room
-                  ? messagesList.length
-                    ? messagesList[0].message.length > 15
-                      ? messagesList[0].message.substring(0, 15) + "...."
-                      : messagesList[0].message
-                    : "Loading..."
-                  : undefined}
-              </AppText>
-            </RoomsListItem>
-          );
-        })}
-      </RoomsList>
+              {messagesList.map((content) => {
+                return (
+                  <div
+                    style={
+                      messagesList[messagesList.length - 1] === content
+                        ? { marginTop: 100 + "px" }
+                        : undefined
+                    }
+                  >
+                    {messagesList[messagesList.indexOf(content) + 1] &&
+                    messagesList[messagesList.indexOf(content) + 1][1].email ===
+                      content[1].email ? (
+                      messagesList.indexOf(content) ===
+                      messagesList.length - 1 ? (
+                        <AppText
+                          color="black"
+                          size={22}
+                          Style={{ marginLeft: "15px", marginTop: "10px" }}
+                        >
+                          {content[1].email.replace("@gmail.com", "")}
+                        </AppText>
+                      ) : undefined
+                    ) : (
+                      <AppText
+                        color="black"
+                        size={22}
+                        Style={{ marginLeft: "15px", marginTop: "10px" }}
+                      >
+                        {content[1].email.replace("@gmail.com", "")}
+                      </AppText>
+                    )}
+
+                    <Spacer height={0.5} />
+                    <Container
+                      flex
+                      direction="row"
+                      width="fit-content"
+                      doubleClick={() => {
+                        likeMessage(
+                          content[0],
+                          rooms[selectedRoom].id,
+                          userEmail
+                        );
+                      }}
+                      Style={{
+                        position: "relative",
+                        maxWidth: "65%",
+                        wordBreak: "break-word",
+                        borderRadius: "15px",
+                        backgroundColor: "#fafafa",
+                        border: "1px solid #ccc",
+                        margin: "1px",
+                        padding: "13px",
+                        marginLeft: "7px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <AppText color="#262626" size={20}>
+                        {content[1].message}
+                      </AppText>
+                      {content[1].likes ? (
+                        <Container flex direction="row">
+                          <Icon
+                            source={likeIcon}
+                            width={25}
+                            height={25}
+                            Style={{
+                              position: "absolute",
+                              bottom: -10,
+                              right: -10,
+                            }}
+                          />
+                          <AppText
+                            color="gray"
+                            size={16}
+                            Style={{
+                              position: "absolute",
+                              bottom: -6,
+                              right: -23,
+                            }}
+                          >
+                            {content[1].likes}
+                          </AppText>
+                        </Container>
+                      ) : undefined}
+                    </Container>
+                  </div>
+                );
+              })}
+            </Container>
+          </ChatCard>
+
+          <RoomsList listDisplay={changeDesign ? roomDisplay : "flex"}>
+            {rooms.map((room) => {
+              return (
+                <RoomsListItem
+                  changeColor={() => {
+                    changeRoom(room);
+                  }}
+                >
+                  <AppText
+                    color="#cfc3cf"
+                    size={20}
+                    Style={{ paddingLeft: 15 }}
+                    mobileStyle={{
+                      fontSize: 20,
+                      color: "#cfc3cf",
+                      padding: 5,
+                    }}
+                  >
+                    {room.name}
+                  </AppText>
+                </RoomsListItem>
+              );
+            })}
+          </RoomsList>
+        </Container>
+      ) : undefined}
     </Container>
   );
 };
