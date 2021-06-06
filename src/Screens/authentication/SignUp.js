@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AppText from "../../Components/reusableComponents/AppText";
 import Spacer from "../../Components/reusableComponents/Spacer";
-import InputField from "../../Components/InputField";
+import InputField from "../../Components/reusableComponents/InputField";
 import Container from "../../Components/reusableComponents/Container";
 
 const InputsContainer = styled.form`

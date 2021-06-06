@@ -5,7 +5,7 @@ import logout from "../helpers/logout";
 import Container from "../Components/reusableComponents/Container";
 import Icon from "../Components/reusableComponents/Icon";
 import userDefault from "../Assets/user-icon.png";
-import Navbar from "../Components/Navbar";
+import Navbar from "../Components/layoutComponents/Navbar";
 
 const Profile = ({ history }) => {
   const [user, setUser] = useState(localStorage.getItem("user"));

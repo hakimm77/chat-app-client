@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import AppText from "./reusableComponents/AppText";
+import AppText from "../reusableComponents/AppText";
 
 const MainCardContainer = styled.div`
   position: absolute;
@@ -14,6 +14,13 @@ const MainCardContainer = styled.div`
   -moz-box-shadow: 0 0 5px #ccc;
   -webkit-box-shadow: 0 0 5px #ccc;
   box-shadow: 0 0 5px #ccc;
+
+  @media (max-width: 1000px) {
+    width: 90%;
+    height: 80%;
+    top: 20%;
+    left: 5%;
+  }
 `;
 
 const Upbar = styled.div`

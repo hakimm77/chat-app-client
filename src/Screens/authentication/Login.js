@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Spacer from "../../Components/reusableComponents/Spacer";
-import InputField from "../../Components/InputField";
+import InputField from "../../Components/reusableComponents/InputField";
 import AppText from "../../Components/reusableComponents/AppText";
 import Loadingimage from "../../Components/reusableComponents/LoadingImage";
 import Container from "../../Components/reusableComponents/Container";

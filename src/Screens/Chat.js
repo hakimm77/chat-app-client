@@ -1,38 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 import AppText from "../Components/reusableComponents/AppText";
-import ChatCard from "../Components/ChatCard";
-import RoomsList from "../Components/RoomsList";
+import ChatCard from "../Components/layoutComponents/ChatCard";
+import RoomsList from "../Components/layoutComponents/RoomsList";
 import sendMessage from "../helpers/sendMessage";
-import RoomsListItem from "../Components/RoomListItem";
-import sendMessageIcon from "../Assets/send-message-icon.png";
+import RoomsListItem from "../Components/layoutComponents/RoomListItem";
 import menuToggle from "../Assets/menu-toggle.png";
 import Container from "../Components/reusableComponents/Container";
-import Spacer from "../Components/reusableComponents/Spacer";
-import Picker from "emoji-picker-react";
-import emojiIcon from "../Assets/emojiIcon.png";
-import likeIcon from "../Assets/like-icon.png";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Icon from "../Components/reusableComponents/Icon";
-import Navbar from "../Components/Navbar";
-import likeMessage from "../helpers/likeMessage";
-
-const MessageInput = styled.input`
-  width: 95%;
-  border-radius: 15px;
-  padding: 10px;
-  border: none;
-  outline: none;
-  font-size: 17px;
-  color: #383838;
-  ::placeholder {
-    font-size: 16px;
-  }
-`;
+import Navbar from "../Components/layoutComponents/Navbar";
+import WriteMessage from "../Components/layoutComponents/WriteMessage";
+import MessagesArea from "../Components/layoutComponents/MessagesArea";
 
 const Chat = ({ history }) => {
   const [user, setUser] = useState(localStorage.getItem("user"));
   const [messageContent, setMessageContent] = useState();
+  const [reply, setReply] = useState();
   const [messagesList, setMessagesList] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(0);
   const [rooms, setRooms] = useState([]);
@@ -128,8 +111,9 @@ const Chat = ({ history }) => {
   onkeydown = (e) => {
     if (isLogged) {
       if (e.keyCode === 13) {
+        sendMessage(messageContent, reply, userEmail, rooms[selectedRoom].id);
         setMessageContent("");
-        sendMessage(messageContent, userEmail, rooms[selectedRoom].id);
+        setReply("");
       }
     }
   };
@@ -152,10 +136,10 @@ const Chat = ({ history }) => {
       {isLogged ? (
         <Container>
           <Icon
-            width="55px"
-            height="55px"
-            padding="5px"
+            width="50px"
+            height="50px"
             source={menuToggle}
+            Style={{ position: "absolute", top: 70, left: 5 }}
             clickEvent={() => {
               setRoomDisplay((previous) =>
                 previous === "flex" ? "none" : "flex"
@@ -167,192 +151,27 @@ const Chat = ({ history }) => {
               rooms[selectedRoom] ? rooms[selectedRoom].name : "Loading..."
             }
           >
-            <Picker
-              onEmojiClick={(event, emojiObject) => {
-                setMessageContent((previousContent) =>
-                  previousContent
-                    ? previousContent.concat(emojiObject.emoji)
-                    : emojiObject.emoji
-                );
-              }}
-              pickerStyle={{
-                display: displayEmojiPicker,
-                position: "absolute",
-                bottom: 60,
-                right: 20,
-                border: "1px solid black",
-              }}
-              groupVisibility={{
-                flags: false,
-                food_drink: false,
-                travel_places: false,
-                symbols: false,
-                recently_used: false,
-              }}
-              native
+            <WriteMessage
+              displayEmojiPicker={displayEmojiPicker}
+              reply={reply}
+              roomsArray={rooms}
+              selectedRoom={selectedRoom}
+              sendMessage={sendMessage}
+              setDisplayEmojiPicker={setDisplayEmojiPicker}
+              msg={messageContent}
+              setMessageContent={setMessageContent}
+              setReply={setReply}
+              user={userEmail}
             />
-            <Container
-              flex
-              direction="row"
-              width="100%"
-              alignVertical="center"
-              alignHorizantle="center"
-            >
-              <Container
-                flex
-                direction="row"
-                width="97%"
-                alignVertical="center"
-                alignHorizantle="center"
-                Style={{
-                  border: "1px solid #a8a8a8",
-                  overflow: "none",
-                  marginBottom: 10,
-                }}
-              >
-                <MessageInput
-                  id="input"
-                  placeholder={
-                    rooms[selectedRoom]
-                      ? `Message - ${rooms[selectedRoom].name}`
-                      : undefined
-                  }
-                  onChange={(txt) => setMessageContent(txt.currentTarget.value)}
-                  value={messageContent}
-                  autoFocus={true}
-                  onFocus={() => {
-                    setDisplayEmojiPicker("none");
-                  }}
-                />
-                <Icon
-                  source={emojiIcon}
-                  width="20px"
-                  height="20px"
-                  padding="5px"
-                  clickEvent={() => {
-                    setDisplayEmojiPicker((previousState) =>
-                      previousState === "none" ? "" : "none"
-                    );
-                  }}
-                />
-                <Icon
-                  source={sendMessageIcon}
-                  width="25px"
-                  height="25px"
-                  padding="5px"
-                  clickEvent={() => {
-                    setMessageContent("");
-                    sendMessage(
-                      messageContent,
-                      userEmail,
-                      rooms[selectedRoom].id
-                    );
-                  }}
-                />
-              </Container>
-            </Container>
-            <Container
-              flex
-              direction="column-reverse"
-              width="100%"
-              Style={{
-                overflow: "auto",
-                paddingBottom: "20px",
-                marginTop: "60px",
-              }}
-            >
-              {messagesList.map((content) => {
-                return (
-                  <div
-                    style={
-                      messagesList[messagesList.length - 1] === content
-                        ? { marginTop: 100 + "px" }
-                        : undefined
-                    }
-                  >
-                    {messagesList[messagesList.indexOf(content) + 1] &&
-                    messagesList[messagesList.indexOf(content) + 1][1].email ===
-                      content[1].email ? (
-                      messagesList.indexOf(content) ===
-                      messagesList.length - 1 ? (
-                        <AppText
-                          color="black"
-                          size={22}
-                          Style={{ marginLeft: "15px", marginTop: "10px" }}
-                        >
-                          {content[1].email.replace("@gmail.com", "")}
-                        </AppText>
-                      ) : undefined
-                    ) : (
-                      <AppText
-                        color="black"
-                        size={22}
-                        Style={{ marginLeft: "15px", marginTop: "10px" }}
-                      >
-                        {content[1].email.replace("@gmail.com", "")}
-                      </AppText>
-                    )}
 
-                    <Spacer height={0.5} />
-                    <Container
-                      flex
-                      direction="row"
-                      width="fit-content"
-                      doubleClick={() => {
-                        likeMessage(
-                          content[0],
-                          rooms[selectedRoom].id,
-                          userEmail
-                        );
-                      }}
-                      Style={{
-                        position: "relative",
-                        maxWidth: "65%",
-                        wordBreak: "break-word",
-                        borderRadius: "15px",
-                        backgroundColor: "#fafafa",
-                        border: "1px solid #ccc",
-                        margin: "1px",
-                        padding: "13px",
-                        marginLeft: "7px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <AppText color="#262626" size={20}>
-                        {content[1].message}
-                      </AppText>
-                      {content[1].likes ? (
-                        <Container flex direction="row">
-                          <Icon
-                            source={likeIcon}
-                            width={25}
-                            height={25}
-                            Style={{
-                              position: "absolute",
-                              bottom: -10,
-                              right: -10,
-                            }}
-                          />
-                          <AppText
-                            color="gray"
-                            size={16}
-                            Style={{
-                              position: "absolute",
-                              bottom: -6,
-                              right: -23,
-                            }}
-                          >
-                            {content[1].likes}
-                          </AppText>
-                        </Container>
-                      ) : undefined}
-                    </Container>
-                  </div>
-                );
-              })}
-            </Container>
+            <MessagesArea
+              messagesList={messagesList}
+              rooms={rooms}
+              selectedRoom={selectedRoom}
+              userEmail={userEmail}
+              setReply={setReply}
+            />
           </ChatCard>
-
           <RoomsList listDisplay={changeDesign ? roomDisplay : "flex"}>
             {rooms.map((room) => {
               return (

@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import Container from "./reusableComponents/Container";
-import AppText from "./reusableComponents/AppText";
-import Icon from "./reusableComponents/Icon";
-import userIcon from "../Assets/user-icon.png";
-import CustomInput from "./reusableComponents/CustomInput";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Container from "../reusableComponents/Container";
+import AppText from "../reusableComponents/AppText";
+import Icon from "../reusableComponents/Icon";
+import userIcon from "../../Assets/user-icon.png";
+import CustomInput from "../reusableComponents/CustomInput";
 
 const Navbar = ({ history, search, searchResults, changeRoom, searchBar }) => {
-  const changeDesign = useMediaQuery("(max-width: 1000px)");
   const [getSearchRes, setGetSearchRes] = useState(false);
   return (
     <Container
@@ -20,6 +18,15 @@ const Navbar = ({ history, search, searchResults, changeRoom, searchBar }) => {
         backgroundColor: "#350d36",
         alignItems: "center",
         justifyContent: "center",
+      }}
+      mobileStyle={{
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        height: "10%",
+        position: "absolute",
+        backgroundColor: "#350d36",
+        alignItems: "center",
       }}
     >
       {searchBar ? (
@@ -35,6 +42,7 @@ const Navbar = ({ history, search, searchResults, changeRoom, searchBar }) => {
             outline: "none",
             color: "#fafafa",
             fontSize: 16,
+            marginLeft: 10,
           }}
           onChangetext={(txt) => {
             search(txt.currentTarget.value);

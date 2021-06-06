@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Spacer from "./reusableComponents/Spacer";
+import Spacer from "./Spacer";
 
 const InputInfo = styled.input`
   width: 300px;

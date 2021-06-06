@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Children } from "react";
 import styled from "styled-components";
-import AppText from "./reusableComponents/AppText";
-import Container from "./reusableComponents/Container";
-import Icon from "./reusableComponents/Icon";
-import addIcon from "../Assets/add-icon.jpg";
-import addRoom from "../helpers/addRoom";
+import AppText from "../reusableComponents/AppText";
+import Container from "../reusableComponents/Container";
+import Icon from "../reusableComponents/Icon";
+import addIcon from "../../Assets/add-icon.jpg";
+import addRoom from "../../helpers/addRoom";
 
 const MainRoomsListContainer = styled.div`
   position: absolute;
