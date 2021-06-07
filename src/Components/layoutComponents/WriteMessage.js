@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import Container from "../reusableComponents/Container";
 import Picker from "emoji-picker-react";
@@ -6,6 +6,7 @@ import Icon from "../reusableComponents/Icon";
 import emojiIcon from "../../Assets/emojiIcon.png";
 import AppText from "../reusableComponents/AppText";
 import sendMessageIcon from "../../Assets/send-message-icon.png";
+import galleryicon from "../../Assets/gallery-icon.png";
 
 const MessageInput = styled.input`
   width: 95%;
@@ -32,6 +33,23 @@ const WriteMessage = ({
   user,
   msg,
 }) => {
+  const [sendImage, setSendImage] = useState();
+  const fileRef = useRef();
+
+  useEffect(() => {
+    if (sendImage) {
+      const fetchLink = reply
+        ? `https://us-central1-backend-a365f.cloudfunctions.net/app/postImage?image=${sendImage}&email=${user}&roomID=${roomsArray[selectedRoom].id}&reply=${reply}`
+        : `https://us-central1-backend-a365f.cloudfunctions.net/app/postImage?image=${sendImage}&email=${user}&roomID=${roomsArray[selectedRoom].id}`;
+
+      fetch(fetchLink)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }
+  }, [sendImage]);
+
   return (
     <Container>
       {reply ? (
@@ -74,6 +92,15 @@ const WriteMessage = ({
             }}
           />
           <Icon
+            source={galleryicon}
+            width="30px"
+            height="23px"
+            padding="5px"
+            clickEvent={() => {
+              fileRef.current.click();
+            }}
+          />
+          <Icon
             source={emojiIcon}
             width="20px"
             height="20px"
@@ -97,6 +124,14 @@ const WriteMessage = ({
           />
         </Container>
       </Container>
+      <input
+        style={{ display: "none" }}
+        type="file"
+        ref={(file) => (fileRef.current = file)}
+        onChange={(e) => {
+          setSendImage(URL.createObjectURL(e.target.files[0]));
+        }}
+      />
       <Picker
         onEmojiClick={(event, emojiObject) => {
           setMessageContent((previousContent) =>

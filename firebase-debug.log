@@ -1,0 +1,103 @@
+[debug] [2021-06-07T19:58:04.899Z] ----------------------------------------------------------------------
+[debug] [2021-06-07T19:58:04.901Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2021-06-07T19:58:04.902Z] CLI Version:   9.2.2
+[debug] [2021-06-07T19:58:04.902Z] Platform:      linux
+[debug] [2021-06-07T19:58:04.902Z] Node Version:  v14.16.0
+[debug] [2021-06-07T19:58:04.902Z] Time:          Mon Jun 07 2021 20:58:04 GMT+0100 (Central European Standard Time)
+[debug] [2021-06-07T19:58:04.902Z] ----------------------------------------------------------------------
+[debug] [2021-06-07T19:58:04.902Z] 
+[debug] [2021-06-07T19:58:04.907Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-06-07T19:58:04.907Z] > authorizing via signed-in user
+[debug] [2021-06-07T19:58:04.908Z] [iam] checking project chat-app-v2 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-06-07T19:58:04.910Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-06-07T19:58:04.910Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-06-07T19:58:05.197Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","date":"Mon, 07 Jun 2021 19:58:05 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-06-07T19:58:05.252Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/chat-app-v2:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2021-06-07T19:58:06.188Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 07 Jun 2021 19:58:06 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=612","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-06-07T19:58:06.192Z] > refreshing access token with scopes: []
+[debug] [2021-06-07T19:58:06.192Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-06-07T19:58:06.458Z] <<< HTTP RESPONSE 200 {"pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","date":"Mon, 07 Jun 2021 19:58:06 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-06-07T19:58:06.509Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/chat-app-v2 [none]
+[debug] [2021-06-07T19:58:06.972Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/chat-app-v2 200
+[debug] [2021-06-07T19:58:06.972Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/chat-app-v2 {"projectId":"chat-app-v2","projectNumber":"500942535282","displayName":"chat-app-v-277","name":"projects/chat-app-v2","resources":{"hostingSite":"chat-app-v2-aaead"},"state":"ACTIVE"}
+[info] 
+[info] === Deploying to 'chat-app-v2'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2021-06-07T19:58:06.978Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-06-07T19:58:06.978Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-06-07T19:58:07.207Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","date":"Mon, 07 Jun 2021 19:58:07 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-06-07T19:58:07.264Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/chat-app-v2-aaead/versions  
+ {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2021-06-07T19:58:08.856Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 07 Jun 2021 19:58:08 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting[chat-app-v2-aaead]: beginning deploy... 
+[info] i  hosting[chat-app-v2-aaead]: found 19 files in build 
+[debug] [2021-06-07T19:58:09.553Z] > refreshing access token with scopes: []
+[debug] [2021-06-07T19:58:09.553Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-06-07T19:58:09.555Z] [hosting] hash cache [YnVpbGQ] stored for 19 files
+[debug] [2021-06-07T19:58:09.556Z] [hosting][hash queue][FINAL] {"max":677,"min":18,"avg":60.8421052631579,"active":0,"complete":19,"success":19,"errored":0,"retried":0,"total":19,"elapsed":684}
+[debug] [2021-06-07T19:58:09.814Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","date":"Mon, 07 Jun 2021 19:58:09 GMT","pragma":"no-cache","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-06-07T19:58:09.857Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0:populateFiles [none]
+[debug] [2021-06-07T19:58:09.857Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0:populateFiles {"files":{"/asset-manifest.json":"ec9efdaca45b2e00d332a6360d49099eb04b2c4c9300b2466a8e11b528b985ba","/favicon.ico":"c599b7a91ab3627e3538125d9f40adc2d4bf949046984262670545dc7738af06","/index.html":"05a009e3f12cb6146e7bbb53666fdf6ebbe56c1be7f29e4585328edc9e285eec","/manifest.json":"0958a5e0c831126100c8c2d06a6bbaa665a3900f21aaff4130238a6f5a113aa1","/static/css/main.1bcb01f5.chunk.css":"f37c418e19c5344e7c2192c98b65988229ce31fbfdb761531557a54007433f53","/robots.txt":"2544ca049f223a42bff01f72ad930a5edba75bbb7199d0f8430a02ff5aca16ec","/static/css/main.1bcb01f5.chunk.css.map":"6fa6b5ac2b093df5b0ae767c7178ba1ee60305988404e25cc078ac47ea76a8f5","/static/js/2.21d256d5.chunk.js.LICENSE.txt":"e6e41a5bafdd9892c5078e3ae4678f11fa7aef8b1f2455e21a38ba4a464c7c99","/static/js/runtime-main.e67e8f3f.js":"7fcb27275ebe2407fb97b63a0dfc628820f9afae08e91aa52bb416743961619f","/static/js/runtime-main.e67e8f3f.js.map":"d5db78e6630c652c8f062088a87ad0ccc5faec10956a8d341dda92073596aa19","/static/media/like-icon.d17ac7e2.png":"11c4ffc9948db031abc5038e7c479196bb451984374e3904a3f713ce7c141092","/static/media/menu-toggle.7b7838cf.png":"542bafc653b3245282bae54a93daa3e8590e6ef24b77d4af3a7dbffa11a7b15a","/app-logo.png":"6bb17bbfd0388a48a2a1dfd8edb9f2d91c50c4b8f0364a67b15b4b97b8f1af3b","/static/js/main.f7a639bc.chunk.js":"e6a44ae012dc523d01fbb736682057c293563e81bdd3fb93b521e2709570b2bf","/static/media/send-message-icon.4708ebeb.png":"f2946ef8d7c13d55b338892fb27a97f87560c692038c45b7e85ccdca2120490b","/static/media/loading.42aaa181.jpg":"e25bc766a7c8d8c3fbbba65ba684f2a7c35596e475fce4740a613fbef8e4878b","/static/js/main.f7a639bc.chunk.js.map":"5f6332aa5d74aaab3964e60fffac2254b92a4c990153880a896e95569a91df21","/static/js/2.21d256d5.chunk.js":"55c241be8643035412eeed0be6186048d5a27a4b0a3611e74cd4a8fb1163d961","/static/js/2.21d256d5.chunk.js.map":"4564e43aff03bbe6a937588b4f7665e2345e3e4af9360493c65f2d96e734867e"}}
+[debug] [2021-06-07T19:58:11.842Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0:populateFiles 200
+[debug] [2021-06-07T19:58:11.842Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0:populateFiles {"uploadRequiredHashes":["ec9efdaca45b2e00d332a6360d49099eb04b2c4c9300b2466a8e11b528b985ba","e6a44ae012dc523d01fbb736682057c293563e81bdd3fb93b521e2709570b2bf","05a009e3f12cb6146e7bbb53666fdf6ebbe56c1be7f29e4585328edc9e285eec","5f6332aa5d74aaab3964e60fffac2254b92a4c990153880a896e95569a91df21"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files"}
+[debug] [2021-06-07T19:58:11.846Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/ec9efdaca45b2e00d332a6360d49099eb04b2c4c9300b2466a8e11b528b985ba [none]
+[debug] [2021-06-07T19:58:11.846Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/ec9efdaca45b2e00d332a6360d49099eb04b2c4c9300b2466a8e11b528b985ba [stream]
+[debug] [2021-06-07T19:58:11.847Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/e6a44ae012dc523d01fbb736682057c293563e81bdd3fb93b521e2709570b2bf [none]
+[debug] [2021-06-07T19:58:11.847Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/e6a44ae012dc523d01fbb736682057c293563e81bdd3fb93b521e2709570b2bf [stream]
+[debug] [2021-06-07T19:58:11.848Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/05a009e3f12cb6146e7bbb53666fdf6ebbe56c1be7f29e4585328edc9e285eec [none]
+[debug] [2021-06-07T19:58:11.848Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/05a009e3f12cb6146e7bbb53666fdf6ebbe56c1be7f29e4585328edc9e285eec [stream]
+[debug] [2021-06-07T19:58:11.849Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/5f6332aa5d74aaab3964e60fffac2254b92a4c990153880a896e95569a91df21 [none]
+[debug] [2021-06-07T19:58:11.849Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/5f6332aa5d74aaab3964e60fffac2254b92a4c990153880a896e95569a91df21 [stream]
+[debug] [2021-06-07T19:58:11.850Z] [hosting][populate queue][FINAL] {"max":2293,"min":2293,"avg":2293,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":2297}
+[debug] [2021-06-07T19:58:11.850Z] [hosting] uploads queued: 4
+[debug] [2021-06-07T19:58:14.151Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/ec9efdaca45b2e00d332a6360d49099eb04b2c4c9300b2466a8e11b528b985ba 200
+[debug] [2021-06-07T19:58:14.152Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/ec9efdaca45b2e00d332a6360d49099eb04b2c4c9300b2466a8e11b528b985ba [stream]
+[debug] [2021-06-07T19:58:14.498Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/5f6332aa5d74aaab3964e60fffac2254b92a4c990153880a896e95569a91df21 200
+[debug] [2021-06-07T19:58:14.498Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/5f6332aa5d74aaab3964e60fffac2254b92a4c990153880a896e95569a91df21 [stream]
+[debug] [2021-06-07T19:58:14.500Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/05a009e3f12cb6146e7bbb53666fdf6ebbe56c1be7f29e4585328edc9e285eec 200
+[debug] [2021-06-07T19:58:14.500Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/05a009e3f12cb6146e7bbb53666fdf6ebbe56c1be7f29e4585328edc9e285eec [stream]
+[debug] [2021-06-07T19:58:14.653Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/e6a44ae012dc523d01fbb736682057c293563e81bdd3fb93b521e2709570b2bf 200
+[debug] [2021-06-07T19:58:14.654Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0/files/e6a44ae012dc523d01fbb736682057c293563e81bdd3fb93b521e2709570b2bf [stream]
+[debug] [2021-06-07T19:58:14.654Z] [hosting][upload queue][FINAL] {"max":2810,"min":2309,"avg":2607,"active":0,"complete":4,"success":4,"errored":0,"retried":0,"total":4,"elapsed":2811}
+[info] ✔  hosting[chat-app-v2-aaead]: file upload complete 
+[debug] [2021-06-07T19:58:14.655Z] [hosting] deploy completed after 5797ms
+[debug] [2021-06-07T19:58:14.891Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "chat-app-v2-aaead"
+    },
+    "site": "chat-app-v2-aaead",
+    "version": "sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0"
+  }
+]
+[info] i  hosting[chat-app-v2-aaead]: finalizing version... 
+[debug] [2021-06-07T19:58:14.893Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-06-07T19:58:14.893Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-06-07T19:58:15.109Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","date":"Mon, 07 Jun 2021 19:58:15 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-06-07T19:58:15.211Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0?updateMask=status  
+ {"status":"FINALIZED"}
+[debug] [2021-06-07T19:58:16.322Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 07 Jun 2021 19:58:16 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-06-07T19:58:16.323Z] [hosting] finalized version for chat-app-v2-aaead: {"name":"sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2021-06-07T19:58:08.275554Z","createUser":{"email":"kimomi392@gmail.com"},"finalizeTime":"2021-06-07T19:58:16.286075Z","finalizeUser":{"email":"kimomi392@gmail.com"}}
+[info] ✔  hosting[chat-app-v2-aaead]: version finalized 
+[info] i  hosting[chat-app-v2-aaead]: releasing new version... 
+[debug] [2021-06-07T19:58:16.324Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/chat-app-v2-aaead/releases?version_name=sites/chat-app-v2-aaead/versions/e7c008edcf8b6ae0  
+ {"message":null}

@@ -57,57 +57,101 @@ const MessagesArea = ({
             )}
             <Container flex direction="row" alignHorizantle="center">
               <Spacer height={0.5} />
+              {content[1].message ? (
+                <Container
+                  flex
+                  direction="row"
+                  width="fit-content"
+                  doubleClick={() => {
+                    likeMessage(content[0], rooms[selectedRoom].id, userEmail);
+                  }}
+                  Style={{
+                    position: "relative",
+                    maxWidth: "65%",
+                    wordBreak: "break-word",
+                    borderRadius: "15px",
+                    backgroundColor: "#fafafa",
+                    border: "1px solid #ccc",
+                    margin: "2px",
+                    padding: "13px",
+                    marginLeft: "7px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <AppText color="#262626" size={20}>
+                    {content[1].message}
+                  </AppText>
 
-              <Container
-                flex
-                direction="row"
-                width="fit-content"
-                doubleClick={() => {
-                  likeMessage(content[0], rooms[selectedRoom].id, userEmail);
-                }}
-                Style={{
-                  position: "relative",
-                  maxWidth: "65%",
-                  wordBreak: "break-word",
-                  borderRadius: "15px",
-                  backgroundColor: "#fafafa",
-                  border: "1px solid #ccc",
-                  margin: "2px",
-                  padding: "13px",
-                  marginLeft: "7px",
-                  cursor: "pointer",
-                }}
-              >
-                <AppText color="#262626" size={20}>
-                  {content[1].message}
-                </AppText>
-
-                {content[1].likes ? (
-                  <Container flex direction="row">
-                    <Icon
-                      source={likeIcon}
-                      width={25}
-                      height={25}
-                      Style={{
-                        position: "absolute",
-                        bottom: -10,
-                        right: -10,
-                      }}
-                    />
-                    <AppText
-                      color="gray"
-                      size={16}
-                      Style={{
-                        position: "absolute",
-                        bottom: -6,
-                        right: -23,
-                      }}
-                    >
-                      {content[1].likes}
-                    </AppText>
-                  </Container>
-                ) : undefined}
-              </Container>
+                  {content[1].likes ? (
+                    <Container flex direction="row">
+                      <Icon
+                        source={likeIcon}
+                        width={25}
+                        height={25}
+                        Style={{
+                          position: "absolute",
+                          bottom: -10,
+                          right: -10,
+                        }}
+                      />
+                      <AppText
+                        color="gray"
+                        size={16}
+                        Style={{
+                          position: "absolute",
+                          bottom: -6,
+                          right: -23,
+                        }}
+                      >
+                        {content[1].likes}
+                      </AppText>
+                    </Container>
+                  ) : undefined}
+                </Container>
+              ) : (
+                <Container
+                  flex
+                  direction="row"
+                  doubleClick={() => {
+                    likeMessage(content[0], rooms[selectedRoom].id, userEmail);
+                  }}
+                  Style={{
+                    position: "relative",
+                    borderRadius: "15px",
+                    padding: "13px",
+                    margin: 2,
+                    marginLeft: "7px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Icon source={content[1].image} width={250} height={150} />
+                  {content[1].likes ? (
+                    <Container flex direction="row">
+                      <Icon
+                        source={likeIcon}
+                        width={25}
+                        height={25}
+                        Style={{
+                          position: "absolute",
+                          bottom: -10,
+                          right: -10,
+                        }}
+                      />
+                      <AppText
+                        color="gray"
+                        size={16}
+                        Style={{
+                          position: "absolute",
+                          bottom: -6,
+                          right: -23,
+                        }}
+                      >
+                        {content[1].likes}
+                      </AppText>
+                    </Container>
+                  ) : undefined}
+                </Container>
+              )}
               <Icon
                 source={replyIcon}
                 width={25}
