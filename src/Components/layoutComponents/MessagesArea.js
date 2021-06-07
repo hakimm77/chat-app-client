@@ -28,9 +28,6 @@ const MessagesArea = ({
       {messagesList.map((content) => {
         return (
           <Container
-            flex
-            direction="row"
-            alignHorizantle="center"
             Style={
               messagesList[messagesList.length - 1] === content
                 ? { position: "relative", marginTop: 100 + "px" }
@@ -58,86 +55,86 @@ const MessagesArea = ({
                 {content[1].email.replace("@gmail.com", "")}
               </AppText>
             )}
+            <Container flex direction="row" alignHorizantle="center">
+              <Spacer height={0.5} />
 
-            <Spacer height={0.5} />
-
-            <Container
-              flex
-              direction="row"
-              width="fit-content"
-              doubleClick={() => {
-                likeMessage(content[0], rooms[selectedRoom].id, userEmail);
-              }}
-              Style={{
-                position: "relative",
-                maxWidth: "65%",
-                wordBreak: "break-word",
-                borderRadius: "15px",
-                backgroundColor: "#fafafa",
-                border: "1px solid #ccc",
-                margin: "2px",
-                padding: "13px",
-                marginLeft: "7px",
-                cursor: "pointer",
-              }}
-            >
-              <AppText color="#262626" size={20}>
-                {content[1].message}
-              </AppText>
-
-              {content[1].likes ? (
-                <Container flex direction="row">
-                  <Icon
-                    source={likeIcon}
-                    width={25}
-                    height={25}
-                    Style={{
-                      position: "absolute",
-                      bottom: -10,
-                      right: -10,
-                    }}
-                  />
-                  <AppText
-                    color="gray"
-                    size={16}
-                    Style={{
-                      position: "absolute",
-                      bottom: -6,
-                      right: -23,
-                    }}
-                  >
-                    {content[1].likes}
-                  </AppText>
-                </Container>
-              ) : undefined}
-            </Container>
-
-            <Icon
-              source={replyIcon}
-              width={25}
-              height={25}
-              padding={7}
-              Style={{ opacity: 0.5 }}
-              clickEvent={() => {
-                setReply(content[1].message);
-              }}
-            />
-
-            {content[1].repliedTo ? (
-              <AppText
-                color="#262626"
-                size={20}
+              <Container
+                flex
+                direction="row"
+                width="fit-content"
+                doubleClick={() => {
+                  likeMessage(content[0], rooms[selectedRoom].id, userEmail);
+                }}
                 Style={{
-                  opacity: 0.6,
+                  position: "relative",
+                  maxWidth: "65%",
+                  wordBreak: "break-word",
+                  borderRadius: "15px",
+                  backgroundColor: "#fafafa",
+                  border: "1px solid #ccc",
+                  margin: "2px",
+                  padding: "13px",
+                  marginLeft: "7px",
+                  cursor: "pointer",
                 }}
               >
-                {`replied to :  ${
-                  content[1].repliedTo.length > 25
-                    ? content[1].repliedTo.substr(0, 25) + "...."
-                    : content[1].repliedTo
-                }`}
-              </AppText>
-            ) : undefined}
+                <AppText color="#262626" size={20}>
+                  {content[1].message}
+                </AppText>
+
+                {content[1].likes ? (
+                  <Container flex direction="row">
+                    <Icon
+                      source={likeIcon}
+                      width={25}
+                      height={25}
+                      Style={{
+                        position: "absolute",
+                        bottom: -10,
+                        right: -10,
+                      }}
+                    />
+                    <AppText
+                      color="gray"
+                      size={16}
+                      Style={{
+                        position: "absolute",
+                        bottom: -6,
+                        right: -23,
+                      }}
+                    >
+                      {content[1].likes}
+                    </AppText>
+                  </Container>
+                ) : undefined}
+              </Container>
+              <Icon
+                source={replyIcon}
+                width={25}
+                height={25}
+                padding={7}
+                Style={{ opacity: 0.5 }}
+                clickEvent={() => {
+                  setReply(content[1].message);
+                }}
+              />
+
+              {content[1].repliedTo ? (
+                <AppText
+                  color="#262626"
+                  size={20}
+                  Style={{
+                    opacity: 0.6,
+                  }}
+                >
+                  {`replied to :  ${
+                    content[1].repliedTo.length > 25
+                      ? content[1].repliedTo.substr(0, 25) + "...."
+                      : content[1].repliedTo
+                  }`}
+                </AppText>
+              ) : undefined}
+            </Container>
           </Container>
         );
       })}

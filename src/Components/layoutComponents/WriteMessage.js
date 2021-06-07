@@ -39,30 +39,6 @@ const WriteMessage = ({
           reply.length > 25 ? reply.substr(0, 25) + "...." : reply
         }`}</AppText>
       ) : undefined}
-      <Picker
-        onEmojiClick={(event, emojiObject) => {
-          setMessageContent((previousContent) =>
-            previousContent
-              ? previousContent.concat(emojiObject.emoji)
-              : emojiObject.emoji
-          );
-        }}
-        pickerStyle={{
-          display: displayEmojiPicker,
-          position: "fixed",
-          bottom: 60,
-          right: 20,
-          border: "1px solid black",
-        }}
-        groupVisibility={{
-          flags: false,
-          food_drink: false,
-          travel_places: false,
-          symbols: false,
-          recently_used: false,
-        }}
-        native
-      />
 
       <Container
         flex
@@ -121,6 +97,33 @@ const WriteMessage = ({
           />
         </Container>
       </Container>
+      <Picker
+        onEmojiClick={(event, emojiObject) => {
+          setMessageContent((previousContent) =>
+            previousContent
+              ? previousContent.concat(emojiObject.emoji)
+              : emojiObject.emoji
+          );
+        }}
+        pickerStyle={{
+          backgroundColor: "white",
+          width: 500,
+          display: displayEmojiPicker,
+          border: "1px solid black",
+        }}
+        groupVisibility={{
+          animals_nature: false,
+          food_drink: false,
+          travel_places: false,
+          activities: false,
+          objects: false,
+          symbols: false,
+          flags: false,
+          recently_used: false,
+        }}
+        native
+        disableSearchBar
+      />
     </Container>
   );
 };

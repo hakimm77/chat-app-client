@@ -11,7 +11,7 @@ import Icon from "../Components/reusableComponents/Icon";
 import Navbar from "../Components/layoutComponents/Navbar";
 import WriteMessage from "../Components/layoutComponents/WriteMessage";
 import MessagesArea from "../Components/layoutComponents/MessagesArea";
-import firebase from '../helpers/firebaseConfig'
+import firebase from "../helpers/firebaseConfig";
 
 const Chat = ({ history }) => {
   const [user, setUser] = useState(localStorage.getItem("user"));
@@ -26,22 +26,7 @@ const Chat = ({ history }) => {
   const [roomDisplay, setRoomDisplay] = useState("none");
   const [searchRes, setSearchRes] = useState([]);
   const changeDesign = useMediaQuery("(max-width: 1000px)");
-  // Watching Rooms
-  useEffect(() => {
-    firebase.database()
-      .ref('roomList')
-      .on('value', snapshot => {
-        const data = snapshot.val()
-        if (data) {
-          let roomsArr = Object.values(data);
-          let newRooms = []
-          roomsArr.forEach((childSnapchot) => {
-            newRooms = [...newRooms, childSnapchot]
-          });
-          setRooms(newRooms);
-        }
-      })
-  },[])
+
   const loggedIn = async () => {
     document.title = "Chat app | chat";
     console.log(user);
@@ -53,49 +38,22 @@ const Chat = ({ history }) => {
     }
   };
 
-  // const fetchMessages = async () => {
-  //   if (rooms[selectedRoom]) {
-  //     const fetchMessagesResponse = fetch(
-  //       `https://us-central1-backend-a365f.cloudfunctions.net/app/get?roomID=${rooms[selectedRoom].id}`
-  //     ).then((response) => {
-  //       return response.json();
-  //     });
-  //
-  //     await fetchMessagesResponse.then((data) => {
-  //       if (data) {
-  //         let messageArr = Object.entries(data);
-  //         setMessagesList([]);
-  //
-  //         messageArr.forEach((childSnapchot) => {
-  //           setMessagesList((previousMessages) => [
-  //             Object.values(childSnapchot),
-  //             ...previousMessages,
-  //           ]);
-  //         });
-  //       }
-  //     });
-  //   }
-  // };
-
-  const getRooms = async () => {
-    const fetchRooms = fetch(
-      `https://us-central1-backend-a365f.cloudfunctions.net/app/getRooms`
-    ).then((response) => {
-      return response.json();
-    });
-
-    await fetchRooms.then((data) => {
-      if (data) {
-        let roomsArr = Object.values(data);
-
-        setRooms([]);
-
-        roomsArr.forEach((childSnapchot) => {
-          setRooms((previousMessages) => [...previousMessages, childSnapchot]);
-        });
-      }
-    });
-  };
+  useEffect(() => {
+    firebase
+      .database()
+      .ref("roomList")
+      .on("value", (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          let roomsArr = Object.values(data);
+          let newRooms = [];
+          roomsArr.forEach((childSnapchot) => {
+            newRooms = [...newRooms, childSnapchot];
+          });
+          setRooms(newRooms);
+        }
+      });
+  }, []);
 
   const changeRoom = (room) => {
     setMessagesList([]);
@@ -105,32 +63,26 @@ const Chat = ({ history }) => {
 
   useEffect(() => {
     loggedIn();
-    // getRooms();
   }, []);
 
-  // Watching Messages
   useEffect(() => {
-    if (rooms[selectedRoom]){
-      firebase.database()
-        .ref('/' + rooms[selectedRoom].id + '/messages')
-        .on('value', snapshot => {
-          const data = snapshot.val()
+    if (rooms[selectedRoom]) {
+      firebase
+        .database()
+        .ref("/" + rooms[selectedRoom].id + "/messages")
+        .on("value", (snapshot) => {
+          const data = snapshot.val();
           if (data) {
             let messageArr = Object.entries(data);
-            let newMessages = []
+            let newMessages = [];
 
             messageArr.forEach((childSnapchot) => {
-              newMessages = [
-                Object.values(childSnapchot),
-                ...newMessages,
-              ];
-
+              newMessages = [Object.values(childSnapchot), ...newMessages];
             });
-            setMessagesList(newMessages)
+            setMessagesList(newMessages);
           }
-        })
+        });
     }
-
   }, [rooms.length, selectedRoom]);
 
   const searchRooms = (txt) => {

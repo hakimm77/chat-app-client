@@ -1,8 +1,10 @@
 const sendMessage = (text, reply, userEmail, roomID) => {
   if (text && userEmail) {
-    fetch(
-      `https://us-central1-backend-a365f.cloudfunctions.net/app/post?message=${text}&email=${userEmail}&roomID=${roomID}&reply=${reply}`
-    )
+    const fetchLink = reply
+      ? `https://us-central1-backend-a365f.cloudfunctions.net/app/post?message=${text}&email=${userEmail}&roomID=${roomID}&reply=${reply}`
+      : `https://us-central1-backend-a365f.cloudfunctions.net/app/post?message=${text}&email=${userEmail}&roomID=${roomID}`;
+
+    fetch(fetchLink)
       .then((response) => {
         return response.json();
       })
