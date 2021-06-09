@@ -5,23 +5,19 @@ import Login from "./Screens/authentication/Login";
 import Profile from "./Screens/Profile";
 import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import "./appStyle.css";
-import {FirebaseAppProvider} from "reactfire";
-import {firebaseConfig} from "./helpers/firebaseConfig";
 
 const App = () => {
   return (
-    // <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/chat" component={Chat} />
-          <Route exact path="/profile" component={Profile} />
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/login" component={Login} />
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/chat" component={Chat} />
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/login" component={Login} />
 
-          <Redirect from="/" to="/chat" />
-        </Switch>
-      </BrowserRouter>
-    // </FirebaseAppProvider>
+        <Redirect from="/" to="/chat" />
+      </Switch>
+    </BrowserRouter>
   );
 };
 
