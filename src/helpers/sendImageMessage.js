@@ -1,7 +1,8 @@
 import fetchServer from "./fetchServer";
 
-const sendMessage = (text, reply, userEmail, roomID) => {
-  if (text && userEmail) {
+const sendImageMessage = (img, user, room, reply) => {
+  if (img && room.id) {
+    const fetchLink = `https://us-central1-backend-a365f.cloudfunctions.net/app/postImage`;
     const fetchOptions = {
       method: "POST",
       mode: "cors",
@@ -14,23 +15,20 @@ const sendMessage = (text, reply, userEmail, roomID) => {
       referrerPolicy: "no-referrer",
       body: reply
         ? JSON.stringify({
-            message: text,
-            email: userEmail,
-            roomID: roomID,
+            image: img,
+            email: user,
+            roomID: room.id,
             reply: reply,
           })
         : JSON.stringify({
-            message: text,
-            email: userEmail,
-            roomID: roomID,
+            image: img,
+            email: user,
+            roomID: room.id,
           }),
     };
-
-    const fetchLink =
-      "https://us-central1-backend-a365f.cloudfunctions.net/app/post";
 
     fetchServer(fetchLink, fetchOptions);
   }
 };
 
-export default sendMessage;
+export default sendImageMessage;

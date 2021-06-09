@@ -11,14 +11,12 @@ const Navbar = ({ history, search, searchResults, changeRoom, searchBar }) => {
     <Container
       flex
       direction="row"
+      position="absolute"
       width="100%"
       height="7%"
-      Style={{
-        position: "absolute",
-        backgroundColor: "#350d36",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      alignHorizantle="center"
+      alignVertical="center"
+      Style={{ backgroundColor: "#350d36" }}
       mobileStyle={{
         display: "flex",
         flexDirection: "row",
@@ -77,15 +75,15 @@ const Navbar = ({ history, search, searchResults, changeRoom, searchBar }) => {
         <Container
           flex
           direction="column"
+          position="absolute"
           width="50%"
+          padding="10px"
           Style={{
             maxHeight: "500px",
             overflow: "auto",
-            padding: 10,
             borderRadius: "10px",
             border: "1px solid gray",
             backgroundColor: "white",
-            position: "absolute",
             top: "50px",
             "z-index": "10",
           }}

@@ -9,6 +9,9 @@ const Container = ({
   alignHorizantle,
   width,
   height,
+  padding,
+  margin,
+  position,
   Style,
   mobileStyle,
   clickEvent,
@@ -19,12 +22,15 @@ const Container = ({
   const changeDesign = useMediaQuery("(max-width: 1000px)");
 
   const containerStyling = {
+    position: position,
     display: flex ? "flex" : undefined,
     flexDirection: direction,
     justifyContent: alignVertical,
     alignItems: alignHorizantle,
     width: width,
     height: height,
+    padding: padding, //top right bottom left
+    margin: margin,
     ...Style,
   };
 

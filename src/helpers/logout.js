@@ -1,5 +1,7 @@
+import fetchServer from "./fetchServer";
+
 const logout = async (history) => {
-  await fetch(
+  fetchServer(
     `https://us-central1-backend-a365f.cloudfunctions.net/app/logout`
   );
 

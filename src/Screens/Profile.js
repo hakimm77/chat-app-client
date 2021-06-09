@@ -70,8 +70,8 @@ const Profile = ({ history }) => {
             height="50px"
             alignVertical="center"
             alignHorizantle="center"
+            padding="7px"
             Style={{
-              padding: "7px",
               backgroundColor: "#350d36",
               borderRadius: "10px",
               cursor: "pointer",

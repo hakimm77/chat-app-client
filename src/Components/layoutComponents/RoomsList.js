@@ -34,11 +34,8 @@ const RoomsList = ({ children, listDisplay }) => {
       <Container
         flex
         direction="row"
-        Style={{
-          paddingLeft: 10,
-          paddingTop: 10,
-          cursor: "pointer",
-        }}
+        padding="10px 0px 0px 10px"
+        Style={{ cursor: "pointer" }}
         clickEvent={() => {
           setDisplayRooms((previous) => (previous ? false : true));
         }}

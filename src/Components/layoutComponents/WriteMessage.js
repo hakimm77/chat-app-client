@@ -7,6 +7,7 @@ import emojiIcon from "../../Assets/emojiIcon.png";
 import AppText from "../reusableComponents/AppText";
 import sendMessageIcon from "../../Assets/send-message-icon.png";
 import galleryicon from "../../Assets/gallery-icon.png";
+import sendImageMessage from "../../helpers/sendImageMessage";
 
 const MessageInput = styled.input`
   width: 95%;
@@ -36,18 +37,16 @@ const WriteMessage = ({
   const [sendImage, setSendImage] = useState();
   const fileRef = useRef();
 
-  useEffect(() => {
-    if (sendImage) {
-      const fetchLink = reply
-        ? `https://us-central1-backend-a365f.cloudfunctions.net/app/postImage?image=${sendImage}&email=${user}&roomID=${roomsArray[selectedRoom].id}&reply=${reply}`
-        : `https://us-central1-backend-a365f.cloudfunctions.net/app/postImage?image=${sendImage}&email=${user}&roomID=${roomsArray[selectedRoom].id}`;
+  const saveImageToSend = (img) => {
+    var reader = new FileReader();
+    reader.onload = () => {
+      setSendImage(reader.result);
+    };
+    reader.readAsDataURL(img);
+  };
 
-      fetch(fetchLink)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        });
-    }
+  useEffect(() => {
+    sendImageMessage(sendImage, user, roomsArray[selectedRoom], reply);
   }, [sendImage]);
 
   return (
@@ -71,11 +70,8 @@ const WriteMessage = ({
           width="97%"
           alignVertical="center"
           alignHorizantle="center"
-          Style={{
-            border: "1px solid #a8a8a8",
-            overflow: "none",
-            marginBottom: 10,
-          }}
+          margin="0px 0px 10px 0px"
+          Style={{ border: "1px solid #a8a8a8", overflow: "none" }}
         >
           <MessageInput
             id="input"
@@ -129,7 +125,7 @@ const WriteMessage = ({
         type="file"
         ref={(file) => (fileRef.current = file)}
         onChange={(e) => {
-          setSendImage(URL.createObjectURL(e.target.files[0]));
+          saveImageToSend(e.target.files[0]);
         }}
       />
       <Picker
