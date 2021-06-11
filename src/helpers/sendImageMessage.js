@@ -1,7 +1,7 @@
 import fetchServer from "./fetchServer";
 
 const sendImageMessage = (img, user, room, reply) => {
-  if (img && room.id) {
+  if (img && img.includes("data:image") && room.id) {
     const fetchLink = `https://us-central1-backend-a365f.cloudfunctions.net/app/postImage`;
     const fetchOptions = {
       method: "POST",

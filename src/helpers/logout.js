@@ -1,12 +1,12 @@
 import fetchServer from "./fetchServer";
 
-const logout = async (history) => {
+const logout = () => {
   fetchServer(
     `https://us-central1-backend-a365f.cloudfunctions.net/app/logout`
   );
 
   localStorage.removeItem("user");
-  history.push("/login");
+  window.location.reload();
 };
 
 export default logout;

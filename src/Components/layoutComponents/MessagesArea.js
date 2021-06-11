@@ -6,6 +6,7 @@ import Spacer from "../reusableComponents/Spacer";
 import likeIcon from "../../Assets/like-icon.png";
 import likeMessage from "../../helpers/likeMessage";
 import replyIcon from "../../Assets/reply-icon.png";
+import likeIconFun from "../../Assets/like-icon-function.jpg";
 
 const MessagesArea = ({
   messagesList,
@@ -36,7 +37,7 @@ const MessagesArea = ({
             {messagesList[messagesList.indexOf(content) + 1] &&
             messagesList[messagesList.indexOf(content) + 1][1].email ===
               content[1].email ? (
-              messagesList.indexOf(content) === messagesList.length - 1 ? (
+              messagesList.indexOf(content) === messagesList.length - 1 && (
                 <AppText
                   color="black"
                   size={22}
@@ -44,7 +45,7 @@ const MessagesArea = ({
                 >
                   {content[1].email.replace("@gmail.com", "")}
                 </AppText>
-              ) : undefined
+              )
             ) : (
               <AppText
                 color="black"
@@ -65,13 +66,6 @@ const MessagesArea = ({
                     width="fit-content"
                     padding="13px"
                     margin="2px 2px 2px 7px"
-                    doubleClick={() => {
-                      likeMessage(
-                        content[0],
-                        rooms[selectedRoom].id,
-                        userEmail
-                      );
-                    }}
                     Style={{
                       maxWidth: "65%",
                       wordBreak: "break-word",
@@ -110,6 +104,28 @@ const MessagesArea = ({
                       </Container>
                     ) : undefined}
                   </Container>
+                  {[content[1].userLiked].filter(
+                    (element) =>
+                      element[
+                        userEmail.replace("@gmail.com", "") + content[0]
+                      ] === userEmail
+                  ).length > 0 ? undefined : (
+                    <Icon
+                      source={likeIconFun}
+                      width={25}
+                      height={25}
+                      padding={7}
+                      Style={{ opacity: 0.4 }}
+                      clickEvent={() => {
+                        likeMessage(
+                          content[0],
+                          rooms[selectedRoom].id,
+                          userEmail
+                        );
+                      }}
+                    />
+                  )}
+
                   <Icon
                     source={replyIcon}
                     width={25}
@@ -128,12 +144,26 @@ const MessagesArea = ({
                   position="relative"
                   padding="13px"
                   margin="2px 2px 2px 7px"
-                  doubleClick={() => {
-                    likeMessage(content[0], rooms[selectedRoom].id, userEmail);
-                  }}
                   Style={{ borderRadius: "15px", cursor: "pointer" }}
                 >
                   <Icon source={content[1].image} width={250} height={150} />
+                  {content[1].likes ? undefined : (
+                    <Icon
+                      source={likeIconFun}
+                      width={25}
+                      height={25}
+                      padding={7}
+                      Style={{ opacity: 0.4 }}
+                      clickEvent={() => {
+                        likeMessage(
+                          content[0],
+                          rooms[selectedRoom].id,
+                          userEmail
+                        );
+                      }}
+                    />
+                  )}
+
                   {content[1].likes ? (
                     <Container flex direction="row">
                       <Icon
@@ -162,7 +192,7 @@ const MessagesArea = ({
                 </Container>
               )}
 
-              {content[1].repliedTo ? (
+              {content[1].repliedTo && (
                 <AppText
                   color="#262626"
                   size={20}
@@ -176,7 +206,7 @@ const MessagesArea = ({
                       : content[1].repliedTo
                   }`}
                 </AppText>
-              ) : undefined}
+              )}
             </Container>
           </Container>
         );

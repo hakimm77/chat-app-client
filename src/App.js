@@ -2,7 +2,6 @@ import React from "react";
 import Chat from "./Screens/Chat";
 import SignUp from "./Screens/authentication/SignUp";
 import Login from "./Screens/authentication/Login";
-import Profile from "./Screens/Profile";
 import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import "./appStyle.css";
 
@@ -11,7 +10,6 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/chat" component={Chat} />
-        <Route exact path="/profile" component={Profile} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={Login} />
 

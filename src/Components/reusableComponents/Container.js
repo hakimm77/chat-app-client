@@ -23,7 +23,7 @@ const Container = ({
 
   const containerStyling = {
     position: position,
-    display: flex ? "flex" : undefined,
+    display: flex && "flex",
     flexDirection: direction,
     justifyContent: alignVertical,
     alignItems: alignHorizantle,

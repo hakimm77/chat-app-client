@@ -1,15 +1,25 @@
+import fetchServer from "./fetchServer";
+
 const likeMessage = async (msg, roomID, user) => {
-  console.log(msg);
+  const fetchLink = `https://us-central1-backend-a365f.cloudfunctions.net/app/likeMsg`;
+  const fetchOptions = {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({
+      msg: msg,
+      room: roomID,
+      user: user,
+    }),
+  };
 
-  const fetchLikeMsg = fetch(
-    `https://us-central1-backend-a365f.cloudfunctions.net/app/likeMsg?msg=${msg}&room=${roomID}&user=${user}`
-  ).then((response) => {
-    return response.json();
-  });
-
-  await fetchLikeMsg.then((data) => {
-    console.log(data);
-  });
+  fetchServer(fetchLink, fetchOptions);
 };
 
 export default likeMessage;

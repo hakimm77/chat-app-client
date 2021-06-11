@@ -26,6 +26,7 @@ const Chat = ({ history }) => {
   const [roomDisplay, setRoomDisplay] = useState("none");
   const [searchRes, setSearchRes] = useState([]);
   const changeDesign = useMediaQuery("(max-width: 1000px)");
+  const [sendImage, setSendImage] = useState();
 
   const loggedIn = async () => {
     document.title = "Chat app | chat";
@@ -59,6 +60,7 @@ const Chat = ({ history }) => {
     setMessagesList([]);
     setSelectedRoom(rooms.indexOf(room));
     setMessageContent("");
+    setReply("");
   };
 
   useEffect(() => {
@@ -101,6 +103,7 @@ const Chat = ({ history }) => {
     if (isLogged) {
       if (e.keyCode === 13) {
         sendMessage(messageContent, reply, userEmail, rooms[selectedRoom].id);
+        setDisplayEmojiPicker("none");
         setMessageContent("");
         setReply("");
       }
@@ -120,9 +123,9 @@ const Chat = ({ history }) => {
         search={searchRooms}
         searchResults={searchRes}
         changeRoom={changeRoom}
-        searchBar
+        user={userEmail}
       />
-      {isLogged ? (
+      {isLogged && (
         <Container>
           <Icon
             width="50px"
@@ -151,6 +154,8 @@ const Chat = ({ history }) => {
               setMessageContent={setMessageContent}
               setReply={setReply}
               user={userEmail}
+              sendImage={sendImage}
+              setSendImage={setSendImage}
             />
 
             <MessagesArea
@@ -186,7 +191,7 @@ const Chat = ({ history }) => {
             })}
           </RoomsList>
         </Container>
-      ) : undefined}
+      )}
     </Container>
   );
 };

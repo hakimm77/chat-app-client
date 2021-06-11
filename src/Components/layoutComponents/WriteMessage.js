@@ -33,8 +33,9 @@ const WriteMessage = ({
   reply,
   user,
   msg,
+  sendImage,
+  setSendImage,
 }) => {
-  const [sendImage, setSendImage] = useState();
   const fileRef = useRef();
 
   const saveImageToSend = (img) => {
@@ -47,15 +48,16 @@ const WriteMessage = ({
 
   useEffect(() => {
     sendImageMessage(sendImage, user, roomsArray[selectedRoom], reply);
+    setSendImage("");
   }, [sendImage]);
 
   return (
     <Container>
-      {reply ? (
+      {reply && (
         <AppText color="#333" Style={{ paddingLeft: 20 }}>{`replying to: ${
           reply.length > 25 ? reply.substr(0, 25) + "...." : reply
         }`}</AppText>
-      ) : undefined}
+      )}
 
       <Container
         flex
@@ -76,16 +78,12 @@ const WriteMessage = ({
           <MessageInput
             id="input"
             placeholder={
-              roomsArray[selectedRoom]
-                ? `Message - ${roomsArray[selectedRoom].name}`
-                : undefined
+              roomsArray[selectedRoom] &&
+              `Message - ${roomsArray[selectedRoom].name}`
             }
             onChange={(txt) => setMessageContent(txt.currentTarget.value)}
             value={msg}
             autoFocus={true}
-            onFocus={() => {
-              ("none");
-            }}
           />
           <Icon
             source={galleryicon}
@@ -114,6 +112,7 @@ const WriteMessage = ({
             padding="5px"
             clickEvent={() => {
               sendMessage(msg, reply, user, roomsArray[selectedRoom].id);
+              setDisplayEmojiPicker("none");
               setMessageContent("");
               setReply("");
             }}
@@ -138,7 +137,7 @@ const WriteMessage = ({
         }}
         pickerStyle={{
           backgroundColor: "white",
-          width: 500,
+          width: "100%",
           display: displayEmojiPicker,
           border: "1px solid black",
         }}
