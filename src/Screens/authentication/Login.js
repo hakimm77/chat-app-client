@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import Spacer from "../../Components/reusableComponents/Spacer";
 import InputField from "../../Components/reusableComponents/InputField";
 import AppText from "../../Components/reusableComponents/AppText";
 import Loadingimage from "../../Components/reusableComponents/LoadingImage";
 import Container from "../../Components/reusableComponents/Container";
+import fetchServer from "../../helpers/fetchServer";
 
 const InputsContainer = styled.form`
   display: flex;
@@ -25,8 +27,7 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-const Login = ({ history }) => {
-  const [user, setUser] = useState(localStorage.getItem("user"));
+const Login = () => {
   const [emailText, setEmailText] = useState();
   const [passwordText, setPasswordText] = useState();
   const [errCode, setErrCode] = useState();
@@ -36,40 +37,38 @@ const Login = ({ history }) => {
     if (email && password) {
       setErrCode("");
       setLoading(true);
-
       if (e) {
         e.preventDefault();
       }
 
-      setPasswordText("");
+      /*fetchServer(
+        "https://us-central1-backend-a365f.cloudfunctions.net/app/login",
+        {
+          email: email,
+          password: password,
+        },
+        true
+      ).then((data) => {
+        console.log(data);
+      });*/
+
       const fetchLogin = fetch(
         `https://us-central1-backend-a365f.cloudfunctions.net/app/login?email=${email}&password=${password}`
-      ).then((response) => {
-        return response.json();
-      });
+      ).then((response) => response.json());
 
       await fetchLogin.then(async (data) => {
         let failed = data.code;
 
         if (!failed) {
           await localStorage.setItem("user", data.user.email);
-          history.push("/chat");
-          setLoading(false);
-          console.log(data);
+          window.location = "/chat";
         } else {
           setErrCode(failed);
-          setLoading(false);
         }
+        setLoading(false);
       });
     }
   };
-
-  useEffect(() => {
-    document.title = "Chat app | login";
-    if (user) {
-      history.push("/chat");
-    }
-  }, []);
 
   return (
     <Container
@@ -78,6 +77,7 @@ const Login = ({ history }) => {
       alignVertical="center"
       alignHorizantle="center"
     >
+      <Helmet title="Chat app | login" />
       <Spacer height={10} />
       <AppText weight="bold" color="#3f4547" size={30}>
         Login your account
@@ -132,7 +132,7 @@ const Login = ({ history }) => {
 
       <Container
         clickEvent={() => {
-          history.push("/signup");
+          window.location = "/signup";
         }}
       >
         <AppText

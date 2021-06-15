@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import AppText from "../Components/reusableComponents/AppText";
 import ChatCard from "../Components/layoutComponents/ChatCard";
 import RoomsList from "../Components/layoutComponents/RoomsList";
 import sendMessage from "../helpers/sendMessage";
 import RoomsListItem from "../Components/layoutComponents/RoomListItem";
-import menuToggle from "../Assets/menu-toggle.png";
+//import menuToggle from "../Assets/menu-toggle.png";
 import Container from "../Components/reusableComponents/Container";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Icon from "../Components/reusableComponents/Icon";
@@ -13,31 +14,15 @@ import WriteMessage from "../Components/layoutComponents/WriteMessage";
 import MessagesArea from "../Components/layoutComponents/MessagesArea";
 import firebase from "../helpers/firebaseConfig";
 
-const Chat = ({ history }) => {
-  const [user, setUser] = useState(localStorage.getItem("user"));
-  const [messageContent, setMessageContent] = useState();
+const Chat = () => {
+  const changeDesign = useMediaQuery("(max-width: 1000px)");
   const [reply, setReply] = useState();
   const [messagesList, setMessagesList] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState(0);
+  const [selectedRoom, setSelectedRoom] = useState(changeDesign ? null : 0);
   const [rooms, setRooms] = useState([]);
-  const [isLogged, setIsLogged] = useState(false);
-  const [userEmail, setUserEmail] = useState();
-  const [displayEmojiPicker, setDisplayEmojiPicker] = useState("none");
-  const [roomDisplay, setRoomDisplay] = useState("none");
-  const [searchRes, setSearchRes] = useState([]);
-  const changeDesign = useMediaQuery("(max-width: 1000px)");
-  const [sendImage, setSendImage] = useState();
-
-  const loggedIn = async () => {
-    document.title = "Chat app | chat";
-    console.log(user);
-    if (user) {
-      setIsLogged(true);
-      setUserEmail(user);
-    } else {
-      history.push("./login");
-    }
-  };
+  const [userEmail, setUserEmail] = useState(localStorage.getItem("user"));
+  const [roomDisplay, setRoomDisplay] = useState("flex");
+  const [mobileChat, setMobileChat] = useState(false);
 
   useEffect(() => {
     firebase
@@ -59,13 +44,10 @@ const Chat = ({ history }) => {
   const changeRoom = (room) => {
     setMessagesList([]);
     setSelectedRoom(rooms.indexOf(room));
-    setMessageContent("");
     setReply("");
+    setMobileChat(true);
+    setRoomDisplay("none");
   };
-
-  useEffect(() => {
-    loggedIn();
-  }, []);
 
   useEffect(() => {
     if (rooms[selectedRoom]) {
@@ -87,29 +69,6 @@ const Chat = ({ history }) => {
     }
   }, [rooms.length, selectedRoom]);
 
-  const searchRooms = (txt) => {
-    if (txt) {
-      setSearchRes(
-        rooms.filter((room) =>
-          room.name.toUpperCase().includes(txt.toUpperCase())
-        )
-      );
-    } else {
-      setSearchRes([]);
-    }
-  };
-
-  onkeydown = (e) => {
-    if (isLogged) {
-      if (e.keyCode === 13) {
-        sendMessage(messageContent, reply, userEmail, rooms[selectedRoom].id);
-        setDisplayEmojiPicker("none");
-        setMessageContent("");
-        setReply("");
-      }
-    }
-  };
-
   return (
     <Container
       flex
@@ -118,80 +77,62 @@ const Chat = ({ history }) => {
       alignVertical={rooms.length ? "space-between" : "center"}
       alignHorizantle={rooms.length ? "" : "center"}
     >
-      <Navbar
-        history={history}
-        search={searchRooms}
-        searchResults={searchRes}
-        changeRoom={changeRoom}
-        user={userEmail}
-      />
-      {isLogged && (
-        <Container>
-          <Icon
-            width="50px"
-            height="50px"
-            source={menuToggle}
-            Style={{ position: "absolute", top: 70, left: 5 }}
-            clickEvent={() => {
-              setRoomDisplay((previous) =>
-                previous === "flex" ? "none" : "flex"
-              );
-            }}
+      <Helmet title="Chat app | chat" />
+      <Navbar changeRoom={changeRoom} user={userEmail} rooms={rooms} />
+      <Container>
+        <ChatCard
+          display={changeDesign ? (mobileChat ? "flex" : "none") : "flex"}
+          roomName={
+            rooms[selectedRoom] ? rooms[selectedRoom].name : "Loading..."
+          }
+          returnMenu={() => {
+            setMobileChat(false);
+            setRoomDisplay("flex");
+          }}
+        >
+          <WriteMessage
+            reply={reply}
+            roomsArray={rooms}
+            selectedRoom={selectedRoom}
+            sendMessage={sendMessage}
+            setReply={setReply}
+            user={userEmail}
           />
-          <ChatCard
-            roomName={
-              rooms[selectedRoom] ? rooms[selectedRoom].name : "Loading..."
-            }
-          >
-            <WriteMessage
-              displayEmojiPicker={displayEmojiPicker}
-              reply={reply}
-              roomsArray={rooms}
-              selectedRoom={selectedRoom}
-              sendMessage={sendMessage}
-              setDisplayEmojiPicker={setDisplayEmojiPicker}
-              msg={messageContent}
-              setMessageContent={setMessageContent}
-              setReply={setReply}
-              user={userEmail}
-              sendImage={sendImage}
-              setSendImage={setSendImage}
-            />
 
-            <MessagesArea
-              messagesList={messagesList}
-              rooms={rooms}
-              selectedRoom={selectedRoom}
-              userEmail={userEmail}
-              setReply={setReply}
-            />
-          </ChatCard>
-          <RoomsList listDisplay={changeDesign ? roomDisplay : "flex"}>
-            {rooms.map((room) => {
-              return (
-                <RoomsListItem
-                  changeColor={() => {
-                    changeRoom(room);
+          <MessagesArea
+            messagesList={messagesList}
+            rooms={rooms}
+            selectedRoom={selectedRoom}
+            userEmail={userEmail}
+            setReply={setReply}
+          />
+        </ChatCard>
+        <RoomsList listDisplay={changeDesign ? roomDisplay : "flex"}>
+          {rooms.map((room, idx) => {
+            return (
+              <RoomsListItem
+                key={idx}
+                changeRoom={() => {
+                  changeRoom(room);
+                }}
+              >
+                <AppText
+                  color="#cfc3cf"
+                  size={20}
+                  Style={{ paddingLeft: 15 }}
+                  mobileStyle={{
+                    fontSize: 20,
+                    color: "#cfc3cf",
+                    padding: 5,
                   }}
                 >
-                  <AppText
-                    color="#cfc3cf"
-                    size={20}
-                    Style={{ paddingLeft: 15 }}
-                    mobileStyle={{
-                      fontSize: 20,
-                      color: "#cfc3cf",
-                      padding: 5,
-                    }}
-                  >
-                    {room.name}
-                  </AppText>
-                </RoomsListItem>
-              );
-            })}
-          </RoomsList>
-        </Container>
-      )}
+                  {room.name}
+                </AppText>
+              </RoomsListItem>
+            );
+          })}
+        </RoomsList>
+      </Container>
     </Container>
   );
 };

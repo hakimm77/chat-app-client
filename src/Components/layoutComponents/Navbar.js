@@ -6,10 +6,26 @@ import userIcon from "../../Assets/user-icon.png";
 import CustomInput from "../reusableComponents/CustomInput";
 import addRoom from "../../helpers/addRoom";
 import ProfileDropdown from "./ProfileDropdown";
+import { useMediaQuery } from "@material-ui/core";
+import addIcon from "../../Assets/add-icon.jpg";
 
-const Navbar = ({ search, searchResults, changeRoom, user }) => {
+const Navbar = ({ changeRoom, user, rooms }) => {
   const [getSearchRes, setGetSearchRes] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+  const changeDesign = useMediaQuery("(max-width: 1000px)");
+  const [searchResults, setSearchRes] = useState([]);
+
+  const search = (txt) => {
+    if (txt) {
+      setSearchRes(
+        rooms.filter((room) =>
+          room.name.toUpperCase().includes(txt.toUpperCase())
+        )
+      );
+    } else {
+      setSearchRes([]);
+    }
+  };
 
   return (
     <Container
@@ -17,44 +33,48 @@ const Navbar = ({ search, searchResults, changeRoom, user }) => {
       direction="row"
       position="absolute"
       width="100%"
-      height="7%"
+      height={changeDesign ? "10%" : "7%"}
       alignHorizantle="center"
       alignVertical="center"
-      Style={{ backgroundColor: "#350d36" }}
-      mobileStyle={{
-        display: "flex",
-        flexDirection: "row",
-        width: "100%",
-        height: "10%",
-        position: "absolute",
-        backgroundColor: "#350d36",
-        alignItems: "center",
-      }}
+      Style={{ backgroundColor: changeDesign ? "#19161d" : "#350d36" }}
     >
-      <Container
-        flex
-        direction="row"
-        position="absolute"
-        width="200px"
-        height="35px"
-        alignHorizantle="center"
-        alignVertical="center"
-        Style={{ backgroundColor: "#3f0e40", cursor: "pointer", left: 30 }}
-        clickEvent={addRoom}
-      >
-        <AppText color="#fafafa" size={18} weight="bold">
-          Create new room
-        </AppText>
-      </Container>
+      {changeDesign ? (
+        <Icon
+          source={addIcon}
+          width={23}
+          height={23}
+          padding={5}
+          Style={{ position: "absolute", top: "20%", left: 5 }}
+          clickEvent={addRoom}
+        />
+      ) : (
+        <Container
+          flex
+          direction="row"
+          position="absolute"
+          width="200px"
+          height="35px"
+          alignHorizantle="center"
+          alignVertical="center"
+          Style={{ backgroundColor: "#3f0e40", cursor: "pointer", left: 30 }}
+          clickEvent={addRoom}
+        >
+          <AppText color="#fafafa" size={18} weight="bold">
+            Create new room
+          </AppText>
+        </Container>
+      )}
       <CustomInput
-        width="50%"
+        width={changeDesign ? "60%" : "50%"}
         height="30px"
         textinside="Search rooms"
         Style={{
           borderRadius: "5px",
           border: "none",
-          backgroundColor: "#431e44",
-          "box-shadow": "inset 0 0 0 1px rgb(104 74 104)",
+          backgroundColor: changeDesign ? "#1a1d22" : "#431e44",
+          "box-shadow": changeDesign
+            ? "inset 0 0 0 1px gray"
+            : "inset 0 0 0 1px rgb(104 74 104)",
           outline: "none",
           color: "#fafafa",
           fontSize: 16,
@@ -90,9 +110,10 @@ const Navbar = ({ search, searchResults, changeRoom, user }) => {
             "z-index": "10",
           }}
         >
-          {searchResults.map((room) => {
+          {searchResults.map((room, idx) => {
             return (
               <Container
+                key={idx}
                 clickEvent={() => {
                   changeRoom(room);
                 }}
@@ -112,9 +133,9 @@ const Navbar = ({ search, searchResults, changeRoom, user }) => {
       )}
       <Icon
         source={userIcon}
-        width="40px"
-        height="40px"
-        Style={{ position: "absolute", top: 5, right: 5 }}
+        width={changeDesign ? 35 : 40}
+        height={changeDesign ? 35 : 40}
+        Style={{ position: "absolute", top: changeDesign ? 12 : 5, right: 10 }}
         clickEvent={() => {
           setDropdown((p) => (p ? false : true));
         }}

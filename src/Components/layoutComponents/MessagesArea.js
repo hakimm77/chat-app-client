@@ -1,12 +1,10 @@
 import React from "react";
 import Container from "../reusableComponents/Container";
-import Icon from "../reusableComponents/Icon";
 import AppText from "../reusableComponents/AppText";
 import Spacer from "../reusableComponents/Spacer";
-import likeIcon from "../../Assets/like-icon.png";
-import likeMessage from "../../helpers/likeMessage";
-import replyIcon from "../../Assets/reply-icon.png";
-import likeIconFun from "../../Assets/like-icon-function.jpg";
+import { useMediaQuery } from "@material-ui/core";
+import TextMessages from "./TextMessages";
+import ImageMessages from "./ImageMessages";
 
 const MessagesArea = ({
   messagesList,
@@ -15,6 +13,8 @@ const MessagesArea = ({
   userEmail,
   setReply,
 }) => {
+  const changeDesign = useMediaQuery("(max-width: 1000px)");
+
   return (
     <Container
       flex
@@ -24,9 +24,10 @@ const MessagesArea = ({
       padding="0px 0px 20px 0px"
       Style={{ overflow: "auto" }}
     >
-      {messagesList.map((content) => {
+      {messagesList.map((content, idx) => {
         return (
           <Container
+            key={idx}
             position="relative"
             margin={
               messagesList[messagesList.length - 1] === content
@@ -49,7 +50,7 @@ const MessagesArea = ({
             ) : (
               <AppText
                 color="black"
-                size={22}
+                size={changeDesign ? 20 : 22}
                 Style={{ marginLeft: "15px", marginTop: "10px" }}
               >
                 {content[1].email.replace("@gmail.com", "")}
@@ -58,151 +59,35 @@ const MessagesArea = ({
             <Container flex direction="row" alignHorizantle="center">
               <Spacer height={0.5} />
               {content[1].message ? (
-                <Container flex direction="row" alignHorizantle="center">
-                  <Container
-                    flex
-                    direction="row"
-                    position="relative"
-                    width="fit-content"
-                    padding="13px"
-                    margin="2px 2px 2px 7px"
-                    Style={{
-                      maxWidth: "65%",
-                      wordBreak: "break-word",
-                      borderRadius: "15px",
-                      border: "1px solid #ccc",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <AppText color="#262626" size={20}>
-                      {content[1].message}
-                    </AppText>
-
-                    {content[1].likes ? (
-                      <Container flex direction="row">
-                        <Icon
-                          source={likeIcon}
-                          width={25}
-                          height={25}
-                          Style={{
-                            position: "absolute",
-                            bottom: -10,
-                            right: -10,
-                          }}
-                        />
-                        <AppText
-                          color="gray"
-                          size={16}
-                          Style={{
-                            position: "absolute",
-                            bottom: -6,
-                            right: -23,
-                          }}
-                        >
-                          {content[1].likes}
-                        </AppText>
-                      </Container>
-                    ) : undefined}
-                  </Container>
-                  {[content[1].userLiked].filter(
-                    (element) =>
-                      element[
-                        userEmail.replace("@gmail.com", "") + content[0]
-                      ] === userEmail
-                  ).length > 0 ? undefined : (
-                    <Icon
-                      source={likeIconFun}
-                      width={25}
-                      height={25}
-                      padding={7}
-                      Style={{ opacity: 0.4 }}
-                      clickEvent={() => {
-                        likeMessage(
-                          content[0],
-                          rooms[selectedRoom].id,
-                          userEmail
-                        );
-                      }}
-                    />
-                  )}
-
-                  <Icon
-                    source={replyIcon}
-                    width={25}
-                    height={25}
-                    padding={7}
-                    Style={{ opacity: 0.5 }}
-                    clickEvent={() => {
-                      setReply(content[1].message);
-                    }}
-                  />
-                </Container>
+                <TextMessages
+                  content={content}
+                  userEmail={userEmail}
+                  rooms={rooms}
+                  selectedRoom={selectedRoom}
+                  setReply={setReply}
+                  changeDesign={changeDesign}
+                />
               ) : (
-                <Container
-                  flex
-                  direction="row"
-                  position="relative"
-                  padding="13px"
-                  margin="2px 2px 2px 7px"
-                  Style={{ borderRadius: "15px", cursor: "pointer" }}
-                >
-                  <Icon source={content[1].image} width={250} height={150} />
-                  {content[1].likes ? undefined : (
-                    <Icon
-                      source={likeIconFun}
-                      width={25}
-                      height={25}
-                      padding={7}
-                      Style={{ opacity: 0.4 }}
-                      clickEvent={() => {
-                        likeMessage(
-                          content[0],
-                          rooms[selectedRoom].id,
-                          userEmail
-                        );
-                      }}
-                    />
-                  )}
-
-                  {content[1].likes ? (
-                    <Container flex direction="row">
-                      <Icon
-                        source={likeIcon}
-                        width={25}
-                        height={25}
-                        Style={{
-                          position: "absolute",
-                          bottom: -10,
-                          right: -10,
-                        }}
-                      />
-                      <AppText
-                        color="gray"
-                        size={16}
-                        Style={{
-                          position: "absolute",
-                          bottom: -6,
-                          right: -23,
-                        }}
-                      >
-                        {content[1].likes}
-                      </AppText>
-                    </Container>
-                  ) : undefined}
-                </Container>
+                <ImageMessages
+                  content={content}
+                  userEmail={userEmail}
+                  rooms={rooms}
+                  selectedRoom={selectedRoom}
+                  changeDesign={changeDesign}
+                />
               )}
 
               {content[1].repliedTo && (
                 <AppText
                   color="#262626"
-                  size={20}
+                  size={changeDesign ? 17 : 20}
                   Style={{
                     opacity: 0.6,
                   }}
                 >
                   {`replied to :  ${
-                    content[1].repliedTo.length > 25
-                      ? content[1].repliedTo.substr(0, 25) + "...."
+                    content[1].repliedTo.length > 20
+                      ? content[1].repliedTo.substr(0, 20) + "...."
                       : content[1].repliedTo
                   }`}
                 </AppText>

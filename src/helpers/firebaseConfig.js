@@ -1,5 +1,5 @@
 import Firebase from "firebase";
- const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyCGwnA9Y-kJ3kgGpG_MN1EZcr3QvRgdjzg",
   authDomain: "chat-app-62267.firebaseapp.com",
   projectId: "chat-app-62267",
@@ -10,10 +10,10 @@ import Firebase from "firebase";
 };
 
 try {
-  Firebase.initializeApp(firebaseConfig)
-} catch (e){
-  console.log({e})
+  Firebase.initializeApp(firebaseConfig);
+} catch (e) {
+  console.log({ e });
 }
 
-const firebase = Firebase
-export default firebase
+const firebase = Firebase;
+export default firebase;

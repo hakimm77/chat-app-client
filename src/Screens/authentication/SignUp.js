@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 import AppText from "../../Components/reusableComponents/AppText";
 import Spacer from "../../Components/reusableComponents/Spacer";
@@ -24,15 +25,13 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-const SignUp = ({ history }) => {
-  const [user, setUser] = useState(localStorage.getItem("user"));
+const SignUp = () => {
   const [emailText, setEmailText] = useState();
   const [passwordText, setPasswordText] = useState();
   const [errCode, setErrCode] = useState();
 
   const signUp = async (email, password, e) => {
     setErrCode("");
-
     if (e) {
       e.preventDefault();
     }
@@ -54,7 +53,16 @@ const SignUp = ({ history }) => {
         if (failed) {
           setErrCode(failed);
         } else {
-          history.push("/login");
+          const fetchLogin = fetch(
+            `https://us-central1-backend-a365f.cloudfunctions.net/app/login?email=${email}&password=${password}`
+          ).then((response) => {
+            return response.json();
+          });
+
+          fetchLogin.then((data) => {
+            localStorage.setItem("user", data.user.email);
+            window.location.reload();
+          });
         }
       });
     }
@@ -62,9 +70,6 @@ const SignUp = ({ history }) => {
 
   useEffect(() => {
     document.title = "Chat app | signUp";
-    if (user) {
-      history.push("/chat");
-    }
   }, []);
 
   return (
@@ -74,6 +79,7 @@ const SignUp = ({ history }) => {
       alignVertical="center"
       alignHorizantle="center"
     >
+      <Helmet title="Chat app | sign up" />
       <Spacer height={10} />
       <AppText weight="bold" color="#3f4547" size={30}>
         Create a free account
@@ -121,7 +127,7 @@ const SignUp = ({ history }) => {
       <Spacer height={15} />
       <Container
         clickEvent={() => {
-          history.push("/login");
+          window.location = "/login";
         }}
       >
         <AppText

@@ -14,14 +14,14 @@ const MainRoomsListItemContainer = styled.div`
   }
 
   @media (max-width: 1000px) {
-    height: 75px;
+    height: 50px;
     padding-right: 7px;
   }
 `;
 
-const RoomsListItem = ({ children, changeColor }) => {
+const RoomsListItem = ({ children, changeRoom }) => {
   return (
-    <MainRoomsListItemContainer onClick={changeColor}>
+    <MainRoomsListItemContainer onClick={changeRoom}>
       {children}
     </MainRoomsListItemContainer>
   );

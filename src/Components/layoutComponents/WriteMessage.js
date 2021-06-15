@@ -22,21 +22,22 @@ const MessageInput = styled.input`
   }
 `;
 
+const MessageInputForm = styled.form`
+  width: 100%;
+`;
+
 const WriteMessage = ({
-  displayEmojiPicker,
   roomsArray,
   selectedRoom,
-  setDisplayEmojiPicker,
   sendMessage,
-  setMessageContent,
   setReply,
   reply,
   user,
-  msg,
-  sendImage,
-  setSendImage,
 }) => {
   const fileRef = useRef();
+  const [messageContent, setMessageContent] = useState();
+  const [displayEmojiPicker, setDisplayEmojiPicker] = useState("none");
+  const [sendImage, setSendImage] = useState();
 
   const saveImageToSend = (img) => {
     var reader = new FileReader();
@@ -44,6 +45,20 @@ const WriteMessage = ({
       setSendImage(reader.result);
     };
     reader.readAsDataURL(img);
+  };
+
+  const openImagePicker = () => {
+    fileRef.current.click();
+  };
+
+  const sendTextMessage = (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+    sendMessage(messageContent, reply, user, roomsArray[selectedRoom].id);
+    setDisplayEmojiPicker("none");
+    setMessageContent("");
+    setReply("");
   };
 
   useEffect(() => {
@@ -75,24 +90,29 @@ const WriteMessage = ({
           margin="0px 0px 10px 0px"
           Style={{ border: "1px solid #a8a8a8", overflow: "none" }}
         >
-          <MessageInput
-            id="input"
-            placeholder={
-              roomsArray[selectedRoom] &&
-              `Message - ${roomsArray[selectedRoom].name}`
-            }
-            onChange={(txt) => setMessageContent(txt.currentTarget.value)}
-            value={msg}
-            autoFocus={true}
-          />
+          <MessageInputForm
+            onSubmit={(event) => {
+              sendTextMessage(event);
+            }}
+          >
+            <MessageInput
+              id="input"
+              type="text"
+              placeholder={
+                roomsArray[selectedRoom] &&
+                `Message - ${roomsArray[selectedRoom].name}`
+              }
+              onChange={(txt) => setMessageContent(txt.currentTarget.value)}
+              value={messageContent}
+              autoFocus={true}
+            />
+          </MessageInputForm>
           <Icon
             source={galleryicon}
             width="30px"
             height="23px"
             padding="5px"
-            clickEvent={() => {
-              fileRef.current.click();
-            }}
+            clickEvent={openImagePicker}
           />
           <Icon
             source={emojiIcon}
@@ -110,12 +130,7 @@ const WriteMessage = ({
             width="25px"
             height="25px"
             padding="5px"
-            clickEvent={() => {
-              sendMessage(msg, reply, user, roomsArray[selectedRoom].id);
-              setDisplayEmojiPicker("none");
-              setMessageContent("");
-              setReply("");
-            }}
+            clickEvent={sendTextMessage}
           />
         </Container>
       </Container>

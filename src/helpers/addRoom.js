@@ -11,30 +11,21 @@ const generateId = () => {
 const addRoom = async () => {
   let roomName = prompt("Please enter a name for the room");
 
-  const fetchLink =
-    "https://us-central1-backend-a365f.cloudfunctions.net/app/addRooms";
-  const fetchOptions = {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify({
-      name: roomName,
-      id: generateId(),
-    }),
-  };
+  if (roomName) {
+    if (roomName.length > 15) {
+      alert("maximum lenght of room name is 15 characters");
+    }
 
-  if (roomName.length > 15) {
-    alert("maximum lenght of room name is 15 characters");
-  }
-
-  if (roomName.length < 15 && roomName) {
-    fetchServer(fetchLink, fetchOptions);
+    if (roomName.length < 15) {
+      fetchServer(
+        "https://us-central1-backend-a365f.cloudfunctions.net/app/addRooms",
+        {
+          name: roomName,
+          id: generateId(),
+        },
+        "post"
+      );
+    }
   }
 };
 
