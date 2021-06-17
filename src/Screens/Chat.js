@@ -42,11 +42,13 @@ const Chat = () => {
   }, []);
 
   const changeRoom = (room) => {
-    setMessagesList([]);
-    setSelectedRoom(rooms.indexOf(room));
-    setReply("");
-    setMobileChat(true);
+    if (selectedRoom !== rooms.indexOf(room)) {
+      setMessagesList([]);
+      setSelectedRoom(rooms.indexOf(room));
+      setReply("");
+    }
     setRoomDisplay("none");
+    setMobileChat(true);
   };
 
   useEffect(() => {

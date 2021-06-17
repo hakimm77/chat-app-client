@@ -41,29 +41,25 @@ const Login = () => {
         e.preventDefault();
       }
 
-      /*fetchServer(
+      fetchServer(
         "https://us-central1-backend-a365f.cloudfunctions.net/app/login",
         {
           email: email,
           password: password,
         },
-        true
-      ).then((data) => {
-        console.log(data);
-      });*/
+        "post"
+      ).then((response) => {
+        console.log(response);
+        const failed = response.data.code;
+        const succeded = response.data.user;
 
-      const fetchLogin = fetch(
-        `https://us-central1-backend-a365f.cloudfunctions.net/app/login?email=${email}&password=${password}`
-      ).then((response) => response.json());
-
-      await fetchLogin.then(async (data) => {
-        let failed = data.code;
-
-        if (!failed) {
-          await localStorage.setItem("user", data.user.email);
-          window.location = "/chat";
-        } else {
+        if (failed) {
+          console.log("out");
           setErrCode(failed);
+        } else if (succeded) {
+          console.log("in");
+          localStorage.setItem("user", response.data.user.email);
+          window.location = "/chat";
         }
         setLoading(false);
       });

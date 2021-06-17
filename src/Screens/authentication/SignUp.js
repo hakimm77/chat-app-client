@@ -5,6 +5,7 @@ import AppText from "../../Components/reusableComponents/AppText";
 import Spacer from "../../Components/reusableComponents/Spacer";
 import InputField from "../../Components/reusableComponents/InputField";
 import Container from "../../Components/reusableComponents/Container";
+import fetchServer from "../../helpers/fetchServer";
 
 const InputsContainer = styled.form`
   display: flex;
@@ -40,27 +41,29 @@ const SignUp = () => {
     setPasswordText("");
 
     if (email && password) {
-      const fetchSignUp = fetch(
-        `https://us-central1-backend-a365f.cloudfunctions.net/app/signUp?email=${email}&password=${password}`
+      fetchServer(
+        "https://us-central1-backend-a365f.cloudfunctions.net/app/signUp",
+        {
+          email: email,
+          password: password,
+        },
+        "post"
       ).then((response) => {
-        return response.json();
-      });
-
-      await fetchSignUp.then((data) => {
-        console.log(data);
-        let failed = data.code;
+        console.log(response);
+        const failed = response.data.code;
 
         if (failed) {
           setErrCode(failed);
         } else {
-          const fetchLogin = fetch(
-            `https://us-central1-backend-a365f.cloudfunctions.net/app/login?email=${email}&password=${password}`
+          fetchServer(
+            "https://us-central1-backend-a365f.cloudfunctions.net/app/login",
+            {
+              email: email,
+              password: password,
+            },
+            "post"
           ).then((response) => {
-            return response.json();
-          });
-
-          fetchLogin.then((data) => {
-            localStorage.setItem("user", data.user.email);
+            localStorage.setItem("user", response.data.user.email);
             window.location.reload();
           });
         }
