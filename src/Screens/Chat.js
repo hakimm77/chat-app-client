@@ -5,7 +5,6 @@ import ChatCard from "../Components/layoutComponents/ChatCard";
 import RoomsList from "../Components/layoutComponents/RoomsList";
 import sendMessage from "../helpers/sendMessage";
 import RoomsListItem from "../Components/layoutComponents/RoomListItem";
-//import menuToggle from "../Assets/menu-toggle.png";
 import Container from "../Components/reusableComponents/Container";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Icon from "../Components/reusableComponents/Icon";
